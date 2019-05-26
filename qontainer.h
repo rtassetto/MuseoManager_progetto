@@ -216,24 +216,15 @@ T& Qontainer<T>::at(unsigned int index){
     }
     return p[index];
 }
-
 //*******************************ITERATOR********************************
 template <typename T>
-typename Qontainer<T>::iterator Qontainer<T>::begin()const{
-    return iterator(p);
+typename Qontainer<T>::smartP Qontainer<T>::begin()const{
+    return smartP(p);
 }
 
 template <typename T>
-typename Qontainer<T>::iterator Qontainer<T>::end()const{
-    return iterator(p+(size));
-}
-template <typename T>
-typename Qontainer<T>::const_iterator Qontainer<T>::cbegin()const{
-    return const_iterator(p);
-}
-template <typename T>
-typename Qontainer<T>::const_iterator Qontainer<T>::cend()const{
-    return const_iterator(p+(size));
+typename Qontainer<T>::smartP Qontainer<T>::end()const{
+    return smartP(p+(size));
 }
 template <typename T>
 void Qontainer<T>::print_all() const {
@@ -244,70 +235,70 @@ void Qontainer<T>::print_all() const {
 }
 //*********************************   iterator   ********************************
 template<class T>
-Qontainer<T>::iterator::iterator(T* t):punt(t){
+Qontainer<T>::smartP(T* t):punt(t){
 }
 template< typename T>
-bool Qontainer<T>::iterator::operator!=(const iterator& ite) const {
+bool Qontainer<T>::smartP::operator!=(const smartP& ite) const {
     return punt!=ite.punt;
 }
 template <typename T>
-bool Qontainer<T>::iterator::operator==(const iterator& ite)const{
+bool Qontainer<T>::smartP::operator==(const smartP& ite)const{
     return punt==ite.punt;
 }
 
 template< typename T>
-typename Qontainer<T>::iterator& Qontainer<T>::iterator::operator++() {
+typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator++() {
     if(punt) punt++;
     return *this;
 }
 template< typename T>
-typename Qontainer<T>::iterator Qontainer<T>::iterator::operator++(int) {
-    iterator aux=*this;
+typename Qontainer<T>::smartP Qontainer<T>::smartP::operator++(int) {
+    smartP aux=*this;
     if(punt) punt++;
     return aux;
 }
 template  <typename T>
-T& Qontainer<T>::iterator::operator*(){
+T& Qontainer<T>::smartP::operator*(){
     return *punt;
 }
 
 template  <typename T>
-T* Qontainer<T>::iterator::operator->(){
+T* Qontainer<T>::smartP::operator->(){
     return punt;
 }
 template <typename T>
-typename Qontainer<T>::iterator& Qontainer<T>::iterator::operator --(){
+typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator --(){
 
     if(punt) punt--;
     return *this;
 }
 
 template <typename T>
-typename Qontainer<T>::iterator Qontainer<T>::iterator::operator --(int){
-    iterator aux(punt);
+typename Qontainer<T>::smartP Qontainer<T>::smartP::operator --(int){
+    smartP aux(punt);
     if(punt) punt--;
     return aux;
 }
 
 template <typename T>
-typename Qontainer<T>::iterator& Qontainer<T>::iterator::operator +(unsigned int i){
+typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator +(unsigned int i){
     if(punt) punt+=i;
     return *this;
 }
 
 template <typename T>
-typename Qontainer<T>::iterator& Qontainer<T>::iterator::operator -(unsigned int i){
+typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator -(unsigned int i){
     if(punt) punt-=i;
     return *this;
 }
 template <typename T>
-typename Qontainer<T>::iterator& Qontainer<T>::iterator::operator -=(unsigned int i){
+typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator -=(unsigned int i){
     if(punt) punt-=i;
     return *this;
 }
 
 template <typename T>
-typename Qontainer<T>::iterator& Qontainer<T>::iterator::operator +=(unsigned int i){
+typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator +=(unsigned int i){
     if(punt) punt+=i;
     return *this;
 }
