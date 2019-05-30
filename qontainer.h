@@ -1,5 +1,6 @@
 #ifndef QONTAINER_H
 #define QONTAINER_H
+#include <iostream>
 
 //definizione contenitori, puntatore smart e relativi metodi
 
@@ -11,28 +12,50 @@ private:
     T* punt;
     void resize();
 public:
-    class smartP{
+    class iteratore{
         friend class Qontainer<T>;
     private:
         T* p;
-        smartP(T*);
+        iteratore(T*);
     public:
-        bool operator==(const smartP&) const;
-        bool operator!=(const smartP&) const;
-        T& operator*();
-        T* operator->();
+        bool operator==(const iteratore&) const;
+        bool operator!=(const iteratore&) const;
+        T& operator*() const;
+        T* operator->() const;
 
-        smartP& operator++();
-        smartP operator++(unsigned int);
-        smartP& operator--();
-        smartP operator--(unsigned int);
+        iteratore& operator++();
+        iteratore operator++(unsigned int);
+        iteratore& operator--();
+        iteratore operator--(unsigned int);
 
-        smartP& operator+(unsigned int);
-        smartP& operator-(unsigned int);
-        smartP& operator+=(unsigned int);
-        smartP& operator-=(unsigned int);
+        iteratore& operator+(unsigned int);
+        iteratore& operator-(unsigned int);
+        iteratore& operator+=(unsigned int);
+        iteratore& operator-=(unsigned int);
 
-    }
+    };
+
+    class iteratore_const{
+        friend class Qontainer<T>;
+    private:
+        T* const_p;
+        iteratore_const(T* const);
+    public:
+        bool operator==(const iteratore_const&) const;
+        bool operator!=(const iteratore_const&) const;
+        T& operator*() const;
+        T* operator->() const;
+
+        iteratore_const& operator++();
+        iteratore_const operator++(unsigned int);
+        iteratore_const& operator--();
+        iteratore_const operator--(unsigned int);
+
+        iteratore_const& operator+(unsigned int);
+        iteratore_const& operator-(unsigned int);
+        iteratore_const& operator+=(unsigned int);
+        iteratore_const& operator-=(unsigned int);
+    };
     //costruttori, assegnazione e distruttore
     Qontainer(unsigned int=2);
     Qontainer(const T&, unsigned int=2);
@@ -57,68 +80,246 @@ public:
     void erase(unsigned int=0);
     void erase(unsigned int,unsigned int);
     T& position(unsigned int);
+    void print() const ;
 
     //iteratori
-    smartP begin() const;
-    smartP end()const;
+    iteratore begin() const;
+    iteratore end() const;
 
 };
 
+// implementazione metodi iteratore
+
+template<class T>
+Qontainer<T>::iteratore::iteratore(T * t):p(t) {}
+
+template<class T>
+bool Qontainer<T>::iteratore::operator==(const Qontainer<T>::iteratore & i) const
+{
+    return i.p==p;
+
+}
+
+template<class T>
+bool Qontainer<T>::iteratore::operator!=(const Qontainer<T>::iteratore & i) const
+{
+    return i.p!=p;
+}
+
+template<class T>
+T &Qontainer<T>::iteratore::operator*() const
+{
+    return *p;
+}
+
+template<class T>
+T *Qontainer<T>::iteratore::operator->() const
+{
+    return p;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore &Qontainer<T>::iteratore::operator++()
+{
+    if(p) p++;
+    return *this;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore Qontainer<T>::iteratore::operator++(unsigned int)
+{
+    iteratore aux=p;
+    if(p)p++;
+    return aux;
+
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore &Qontainer<T>::iteratore::operator--()
+{
+    if(p) p--;
+    return *this;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore Qontainer<T>::iteratore::operator--(unsigned int)
+{
+    iteratore aux=p;
+    if(p)p--;
+    return aux;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore &Qontainer<T>::iteratore::operator+(unsigned int n)
+{
+    if(p) p+=n;
+    return *this;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore &Qontainer<T>::iteratore::operator-(unsigned int n)
+{
+    if(p) p-=n;
+    return *this;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore &Qontainer<T>::iteratore::operator+=(unsigned int n)
+{
+    if(p) p=p+n;
+    return *this;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore &Qontainer<T>::iteratore::operator-=(unsigned int n)
+{
+    if(p) p=p-n;
+    return *this;
+}
 
 
-//implementazione dei metodi
+//implementazione metodi iteratore_const
+
+template<class T>
+Qontainer<T>::iteratore_const::iteratore_const(T * t):const_p(t) {}
+
+template<class T>
+bool Qontainer<T>::iteratore_const::operator==(const Qontainer<T>::iteratore_const & i) const
+{
+    return i.const_p==const_p;
+
+}
+
+template<class T>
+bool Qontainer<T>::iteratore_const::operator!=(const Qontainer<T>::iteratore_const & i) const
+{
+    return i.const_p!=const_p;
+}
+
+template<class T>
+T &Qontainer<T>::iteratore_const::operator*() const
+{
+    return *const_p;
+}
+
+template<class T>
+T *Qontainer<T>::iteratore_const::operator->() const
+{
+    return const_p;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore_const &Qontainer<T>::iteratore_const::operator++()
+{
+    if(const_p) const_p++;
+    return *this;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore_const Qontainer<T>::iteratore_const::operator++(unsigned int)
+{
+    iteratore_const aux=const_p;
+    if(const_p)const_p++;
+    return aux;
+
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore_const &Qontainer<T>::iteratore_const::operator--()
+{
+    if(const_p) const_p--;
+    return *this;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore_const Qontainer<T>::iteratore_const::operator--(unsigned int)
+{
+    iteratore_const aux=const_p;
+    if(const_p)const_p--;
+    return aux;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore_const &Qontainer<T>::iteratore_const::operator+(unsigned int n)
+{
+    if(const_p) const_p+=n;
+    return *this;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore_const &Qontainer<T>::iteratore_const::operator-(unsigned int n)
+{
+    if(const_p) const_p-=n;
+    return *this;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore_const &Qontainer<T>::iteratore_const::operator+=(unsigned int n)
+{
+    if(const_p) const_p+=n;
+    return *this;
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore_const &Qontainer<T>::iteratore_const::operator-=(unsigned int n)
+{
+    if(const_p) const_p-=n;
+    return *this;
+}
+
+//implementazione metodi Qontainer
 
 template <typename T>
 Qontainer<T>::Qontainer(unsigned int s)
     :size(0), capacity(s),
-    p( new T[s]){
+    punt( new T[s]){
 }
 template  <typename T>
 Qontainer<T>::Qontainer( const T& t,unsigned int s):
-    size(0), capacity(s),    p(new T[s]){
+    size(0), capacity(s),    punt(new T[s]){
 
     for(int i=0; i<capacity; i++)
-        p[i]=t;
+        punt[i]=t;
 }
 template<typename T>
 Qontainer<T>::Qontainer(const Qontainer<T>& a)//costruttore di copia
     : size(a.size),
-      capacity(a.capacity),p(new T[a.capacity]){
+      capacity(a.capacity),punt(new T[a.capacity]){
     for(unsigned int i=0; i<size; i++)
-        p[i]=a.p[i];
+        punt[i]=a.punt[i];
 }
 template<typename T>
 Qontainer<T>::~Qontainer<T>(){
-    if(p) delete[] p;
+    if(punt) delete[] punt;
 }
 
 template <typename T>
 Qontainer<T>& Qontainer<T>::operator=(const Qontainer<T>& t){
     if(this!= &t){
-        delete[] p;
+        delete[] punt;
         size=t.size;
         capacity=t.capacity;
-        p= new T[capacity];
+        punt= new T[capacity];
         for(unsigned int i=0; i<size; i++)
-            p[i]=t.p[i];
+            punt[i]=t.punt[i];
     }
 
     return *this;
 }
 
 template<typename T>
-T& Qontainer<T>::operator[](unsigned int index){
-    return p[index];
+T& Qontainer<T>::operator[](unsigned int i){
+    return punt[i];
 }
 
 template<class T>
 bool Qontainer<T>::operator==(const Qontainer<T> & t) const
 {
-    bool uguale=t.size== size && t.capacity== capacity;
-    for (auto it= cbegin(), it2= t.cbegin(); it!=cend() && uguale; ++it, ++it2) {
-        if(*it!=*it2)uguale=false;
+    bool equal= t.size==size && t.capacity==capacity;
+    for (auto it=begin(), it2= t.begin(); it!=end() && equal; ++it, ++it2) {
+        if(*it!=*it2)equal=false;
     }
-    return uguale;
+    return equal;
 }
 
 template <typename T>
@@ -132,8 +333,8 @@ unsigned int Qontainer<T>::getCapacity()const{
 }
 template <typename T>
 void Qontainer<T>::clear(){
-    delete [] p;
-    p= new T[2];
+    delete [] punt;
+    punt= new T[2];
     capacity=2;
     size=0;
 }
@@ -142,178 +343,95 @@ bool Qontainer<T>::isEmpty()const {
     return size==0;
 }
 template <typename T>
-T& Qontainer<T>::front(){
-    return p[0];
+T& Qontainer<T>::first()const{
+    return punt[0];
 }
 
 
 template< typename T>
-T& Qontainer<T>::back(){
-    return p[size-1];
+T& Qontainer<T>::last()const{
+    return punt[size-1];
 }
 template  <typename T>
-void Qontainer<T>::reserve(){
-    //ricrea il buffer con la dimensione doppia rispetto a quella attuale.
+void Qontainer<T>::resize(){
     unsigned int newCapacity= capacity*2;
-    T* newBuffer= new T[newCapacity];
+    T* newPunt= new T[newCapacity];
 
     for(unsigned int i=0; i<size; i++){
-        newBuffer[i]= p[i];
+        newPunt[i]= punt[i];
     }
 
     capacity= newCapacity;
-    delete [] p;
-    p=newBuffer;
+    delete [] punt;
+    punt=newPunt;
 }
 template<typename T>
-void Qontainer<T>::push_back(const T& t){
-    if (!(size<capacity))
-        reserve();
-    p[size++]=t;
-
+void Qontainer<T>::push_back(const T& t){ //aggiungo in coda
+    if (!(size<capacity))resize();
+    punt[size+1]=t;
 }
 
 template<class T>
-void Qontainer<T>::pop_back()
+void Qontainer<T>::pop_back() //tolgo in coda
 {
-    size>0 ? --size:0;
+    if(size) size--;
 }
 template <typename T>
 void Qontainer<T>::erase(unsigned int index){
-    if(index>size-1) throw std::out_of_range("The index is out of range!");
-    for(unsigned int i=index; i<size-1; i++ )
-        p[i]= p[i+1];
+    if(index>size-1) throw std::out_of_range("Indice fuori dai limiti");
+    for(unsigned int i=index; i<size-1; i++){
+        punt[i]=punt[i+1];
+    }
     size--;
-
 }
 
 template <typename T>
 void Qontainer<T>::erase(unsigned int start, unsigned int end){
-    if(start<0 || end<0||start >size-1 || end>size-1 || start> end ) throw std::out_of_range("Indexes are out of bounds");
+    if(start<0 || end<0||start >size-1 || end>size-1 || start> end ) throw std::out_of_range("Indici fuori dai limiti");
 
-    unsigned int i=start, j=1;
-
-    for(; i<size; i++, j++)
-        p[i]=p[end+j];
-
+    for(unsigned int i=start, j=1; i<size; i++, j++){
+        punt[i]=punt[end+j];
+    }
     size-=(end-start)+1;
 }
-template<class T>
-void  Qontainer<T>::erase(T which)
-{
-//    std::cerr<<"cerco indice"<<std::endl;
-    unsigned int index=0U;
-    for(auto it= begin() ; (*it)!= which && it!=end(); index++, ++it);
 
-//    std::cerr<<"Indice: "<<index<<std::endl;
+template<class T>
+void  Qontainer<T>::erase(T t)
+{
+    unsigned int index=0;
+    for(auto it= begin() ; (*it)!= t && it!=end(); index++, ++it);
     return erase(index);
 }
+
 template <typename T>
-T& Qontainer<T>::at(unsigned int index){
+T& Qontainer<T>::position(unsigned int index){
     if(index<0 || index > size-1){
-        throw std::out_of_range("The index is out of bound");
-
+        throw std::out_of_range("Indice fuori dai limiti");
     }
-    return p[index];
-}
-//*******************************ITERATOR********************************
-template <typename T>
-typename Qontainer<T>::smartP Qontainer<T>::begin()const{
-    return smartP(p);
+    return punt[index];
 }
 
 template <typename T>
-typename Qontainer<T>::smartP Qontainer<T>::end()const{
-    return smartP(p+(size));
+typename Qontainer<T>::iteratore Qontainer<T>::begin()const{
+    return iteratore(punt);
+}
+
+template <typename T>
+typename Qontainer<T>::iteratore Qontainer<T>::end()const{
+    return iteratore(punt+(size));
 }
 template <typename T>
-void Qontainer<T>::print_all() const {
+void Qontainer<T>::print() const {
     if(size==0) std::cout<<"Vector e' vuoto "<<std::endl;
-    for( unsigned int i=0; i< size; i++)
-        std::cout<<p[i]<<" ";
+    for(unsigned int i=0; i< size; i++){
+        std::cout<<punt[i]<<" ";
+    }
     std::cout<<std::endl;
 }
-//*********************************   iterator   ********************************
-template<class T>
-Qontainer<T>::smartP(T* t):punt(t){
-}
-template< typename T>
-bool Qontainer<T>::smartP::operator!=(const smartP& ite) const {
-    return punt!=ite.punt;
-}
-template <typename T>
-bool Qontainer<T>::smartP::operator==(const smartP& ite)const{
-    return punt==ite.punt;
-}
-
-template< typename T>
-typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator++() {
-    if(punt) punt++;
-    return *this;
-}
-template< typename T>
-typename Qontainer<T>::smartP Qontainer<T>::smartP::operator++(int) {
-    smartP aux=*this;
-    if(punt) punt++;
-    return aux;
-}
-template  <typename T>
-T& Qontainer<T>::smartP::operator*(){
-    return *punt;
-}
-
-template  <typename T>
-T* Qontainer<T>::smartP::operator->(){
-    return punt;
-}
-template <typename T>
-typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator --(){
-
-    if(punt) punt--;
-    return *this;
-}
-
-template <typename T>
-typename Qontainer<T>::smartP Qontainer<T>::smartP::operator --(int){
-    smartP aux(punt);
-    if(punt) punt--;
-    return aux;
-}
-
-template <typename T>
-typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator +(unsigned int i){
-    if(punt) punt+=i;
-    return *this;
-}
-
-template <typename T>
-typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator -(unsigned int i){
-    if(punt) punt-=i;
-    return *this;
-}
-template <typename T>
-typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator -=(unsigned int i){
-    if(punt) punt-=i;
-    return *this;
-}
-
-template <typename T>
-typename Qontainer<T>::smartP& Qontainer<T>::smartP::operator +=(unsigned int i){
-    if(punt) punt+=i;
-    return *this;
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 #endif // QONTAINER_H
+
+
+

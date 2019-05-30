@@ -22,6 +22,7 @@ public:
     string getAutore() const;
     string getDescrizione() const;
     string getFoto() const;
+    QDate getData()const;
     //metodi virtuali
     virtual ~MuseoItem()=default;
     virtual string getTipo() const=0;

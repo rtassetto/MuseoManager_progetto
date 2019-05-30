@@ -26,6 +26,11 @@ string MuseoItem::getFoto() const
     return foto;
 }
 
+QDate MuseoItem::getData() const
+{
+    return dataScoperta;
+}
+
 bool MuseoItem::operator==(const MuseoItem & m)
 {
     return nome==m.nome && autore==m.autore && descrizione==m.descrizione && foto==m.foto && dataScoperta==m.dataScoperta;
