@@ -2,25 +2,26 @@
 #define MODELLO_H
 #include <qontainer.h>
 #include <museoitem.h>
+#include <xmlio.h>
 
 class Modello
 {
 private:
-    Qontainer<MuseoItem*>* q;
-    Qontainer<MuseoItem*>* result;
+    Qontainer<MuseoItem*> q;
     string path;
+    bool isSaved;
 
 public:
     //costruttore e distruttore
-    Modello(string ="../MuseoManager/dati.xml");
-    ~Modello();
+    Modello()=default;
+    ~Modello()=default;
 
     //metodi
     Qontainer<MuseoItem*>::iteratore begin();
     Qontainer<MuseoItem*>::iteratore end();
 
-    void load();
-    void save();
+    void load(const string&);
+    void save(const string&) const;
     bool getSaved() const;
     void setSaved(bool);
     unsigned int getDataSize()const;
@@ -34,7 +35,7 @@ public:
     MuseoItem* position(unsigned int);
 
     void clear();
-    void stampa()const;
+    void print()const;
     void setNewPath(string );
 
 

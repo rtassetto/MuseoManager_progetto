@@ -4,7 +4,7 @@
 #include <string>
 using std::string;
 
-enum categoriaP{ritratto, paesaggio, naturamorta, allegoria, fotografia};
+enum categoriaP{Ritratto, Paesaggio, Naturamorta, Allegoria, Fotografia};
 class PictureItem : public MuseoItem
 {
 private:
@@ -16,9 +16,10 @@ public:
     PictureItem(string , string , string , string , QDate , categoriaP, string, string);
     PictureItem(const PictureItem&);
     //get
-    categoriaP getCategoria()const;
+    string getCategoria()const;
     string getSoggetto()const;
     string getMovimento()const;
+    static categoriaP getEnum(const string&);
     string getTipo()const override;
     //operatori
     bool operator==(const PictureItem&);

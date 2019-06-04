@@ -6,9 +6,16 @@ PictureItem::PictureItem(string n, string a, string d, string f, QDate dS, categ
 PictureItem::PictureItem(const PictureItem & p):MuseoItem(p),cat(p.cat),soggetto(p.soggetto),movimentoArtistico(p.movimentoArtistico)
 {}
 
-categoriaP PictureItem::getCategoria() const
+std::string PictureItem::getCategoria() const
 {
-    return cat;
+    switch(cat)
+    {
+        case Ritratto: return "ritratto";
+        case Paesaggio: return "paesaggio";
+        case Naturamorta: return "naturamorta";
+        case Allegoria: return "allegoria";
+        case Fotografia: return "fotografia";
+    }
 }
 
 std::string PictureItem::getSoggetto() const
@@ -19,6 +26,23 @@ std::string PictureItem::getSoggetto() const
 std::string PictureItem::getMovimento() const
 {
     return movimentoArtistico;
+}
+
+categoriaP PictureItem::getEnum(const std::string & s)
+{
+    if(s=="ritratto")
+    {
+        return categoriaP::Ritratto;
+    }else if(s=="paesaggio")
+    {
+        return categoriaP::Paesaggio;
+    }else if(s=="naturamorta"){
+        return categoriaP::Naturamorta;
+    }else if(s=="allegoria"){
+        return categoriaP::Allegoria;
+    }else{
+        return categoriaP::Fotografia;
+    }
 }
 
 std::string PictureItem::getTipo() const

@@ -4,7 +4,7 @@
 #include <string>
 using std::string;
 
-enum categoriaS{busto, bassorilievo, altorilievo, sculturaequestre};
+enum categoriaS{Busto, Bassorilievo, Altorilievo, Sculturaequestre};
 class StatueItem : public MuseoItem
 {
 private:
@@ -16,9 +16,10 @@ public:
     StatueItem(string , string , string , string , QDate , categoriaS, string, string);
     StatueItem(const StatueItem&);
     //get
-    categoriaS getCategoria()const;
+    string getCategoria()const;
     string getSoggetto()const;
     string getMateriale()const;
+    static categoriaS getEnum(const string&);
     string getTipo()const override;
     //operatori
     bool operator==(const StatueItem&);

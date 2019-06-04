@@ -10,14 +10,32 @@ DocumentItem::DocumentItem(const DocumentItem &m):MuseoItem(m),cat(m.cat), testo
 
 }
 
-categoriaD DocumentItem::getCategoria() const
+std::string DocumentItem::getCategoria() const
 {
-    return cat;
+    switch(cat)
+    {
+        case Rivista: return "rivista";
+        case Lettera: return "lettera";
+        case Libro: return "libro";
+    }
 }
 
 std::string DocumentItem::getTesto() const
 {
     return testo;
+}
+
+categoriaD DocumentItem::getEnum(const string& s)
+{
+    if(s=="rivista")
+    {
+        return categoriaD::Rivista;
+    }else if(s=="lettera")
+    {
+        return categoriaD::Lettera;
+    }else{
+        return categoriaD::Libro;
+    }
 }
 
 std::string DocumentItem::getTipo() const

@@ -24,9 +24,9 @@ public:
         T* operator->() const;
 
         iteratore& operator++();
-        iteratore operator++(unsigned int);
+        iteratore operator++(int);
         iteratore& operator--();
-        iteratore operator--(unsigned int);
+        iteratore operator--(int);
 
         iteratore& operator+(unsigned int);
         iteratore& operator-(unsigned int);
@@ -47,9 +47,9 @@ public:
         T* operator->() const;
 
         iteratore_const& operator++();
-        iteratore_const operator++(unsigned int);
+        iteratore_const operator++(int);
         iteratore_const& operator--();
-        iteratore_const operator--(unsigned int);
+        iteratore_const operator--(int);
 
         iteratore_const& operator+(unsigned int);
         iteratore_const& operator-(unsigned int);
@@ -85,6 +85,8 @@ public:
     //iteratori
     iteratore begin() const;
     iteratore end() const;
+    iteratore_const c_begin() const;
+    iteratore_const c_end() const;
 
 };
 
@@ -126,7 +128,7 @@ typename Qontainer<T>::iteratore &Qontainer<T>::iteratore::operator++()
 }
 
 template<typename T>
-typename Qontainer<T>::iteratore Qontainer<T>::iteratore::operator++(unsigned int)
+typename Qontainer<T>::iteratore Qontainer<T>::iteratore::operator++(int)
 {
     iteratore aux=p;
     if(p)p++;
@@ -142,7 +144,7 @@ typename Qontainer<T>::iteratore &Qontainer<T>::iteratore::operator--()
 }
 
 template<typename T>
-typename Qontainer<T>::iteratore Qontainer<T>::iteratore::operator--(unsigned int)
+typename Qontainer<T>::iteratore Qontainer<T>::iteratore::operator--(int)
 {
     iteratore aux=p;
     if(p)p--;
@@ -216,7 +218,7 @@ typename Qontainer<T>::iteratore_const &Qontainer<T>::iteratore_const::operator+
 }
 
 template<typename T>
-typename Qontainer<T>::iteratore_const Qontainer<T>::iteratore_const::operator++(unsigned int)
+typename Qontainer<T>::iteratore_const Qontainer<T>::iteratore_const::operator++(int)
 {
     iteratore_const aux=const_p;
     if(const_p)const_p++;
@@ -232,7 +234,7 @@ typename Qontainer<T>::iteratore_const &Qontainer<T>::iteratore_const::operator-
 }
 
 template<typename T>
-typename Qontainer<T>::iteratore_const Qontainer<T>::iteratore_const::operator--(unsigned int)
+typename Qontainer<T>::iteratore_const Qontainer<T>::iteratore_const::operator--(int)
 {
     iteratore_const aux=const_p;
     if(const_p)const_p--;

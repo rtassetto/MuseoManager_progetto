@@ -10,10 +10,17 @@ StatueItem::StatueItem(const StatueItem & s):MuseoItem(s),cat(s.cat),soggetto(s.
 
 }
 
-categoriaS StatueItem::getCategoria() const
+std::string StatueItem::getCategoria() const
 {
-    return cat;
+    switch(cat)
+    {
+        case Busto: return "busto";
+        case Bassorilievo: return "bassorilievo";
+        case Altorilievo: return "altorilievo";
+        case Sculturaequestre: return "sculturaequestre";
+    }
 }
+
 
 std::string StatueItem::getSoggetto() const
 {
@@ -23,6 +30,21 @@ std::string StatueItem::getSoggetto() const
 std::string StatueItem::getMateriale() const
 {
     return materiale;
+}
+
+categoriaS StatueItem::getEnum(const std::string & s)
+{
+    if(s=="busto")
+    {
+        return categoriaS::Busto;
+    }else if(s=="bassorilievo")
+    {
+        return categoriaS::Bassorilievo;
+    }else if(s=="altorilievo"){
+        return categoriaS::Altorilievo;
+    }else{
+        return categoriaS::Sculturaequestre;
+    }
 }
 
 std::string StatueItem::getTipo() const

@@ -2,6 +2,9 @@
 #define XMLIO_H
 #include <qontainer.h>
 #include <museoitem.h>
+#include<statueitem.h>
+#include<documentitem.h>
+#include<pictureitem.h>
 
 class XmlIO
 {
