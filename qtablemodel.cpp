@@ -30,7 +30,7 @@ bool QTableModel::insertRows(int row, int count, const QModelIndex &parent)
 
 }
 
-void QTableModel::removeColumns(int column, int count, const QModelIndex &parent)
+/*void QTableModel::removeColumns(int column, int count, const QModelIndex &parent)
 {
 
 }
@@ -38,4 +38,4 @@ void QTableModel::removeColumns(int column, int count, const QModelIndex &parent
 void QTableModel::removeRows(int row, int count, const QModelIndex &parent)
 {
 
-}
+}*/

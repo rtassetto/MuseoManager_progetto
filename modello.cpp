@@ -33,6 +33,7 @@ void Modello::setSaved(bool b)
     isSaved=b;
 }
 
+
 unsigned int Modello::getDataSize() const
 {
     return q.getSize();

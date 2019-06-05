@@ -14,8 +14,8 @@ public:
     int columnCount(const QModelIndex &) const override;
     bool insertColumns(int , int , const QModelIndex &)override;
     bool insertRows(int , int , const QModelIndex &) override;
-    void removeColumns(int , int , const QModelIndex &) override;
-    void removeRows(int , int , const QModelIndex &) override;
+    //void removeColumns(int , int , const QModelIndex &) override;
+  //  void removeRows(int , int , const QModelIndex &) override;
 };
 
 #endif // QTABLEMODEL_H

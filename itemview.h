@@ -2,6 +2,9 @@
 #define ITEMVIEW_H
 #include <QLabel>
 #include <QTextEdit>
+#include <QWidget>
+#include <QMainWindow>
+#include <QLineEdit>
 
 #include <QMainWindow>
 

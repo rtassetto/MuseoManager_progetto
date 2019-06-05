@@ -5,10 +5,9 @@
 
 class TableView : public QTableView
 {
-private:
-
-public:
-    TableView();
+    TableView(QWidget* = nullptr);
+    QSize sizeHint() const override;
+    void mousePressEvent(QMouseEvent*) override;
 };
 
 #endif // TABLEVIEW_H
