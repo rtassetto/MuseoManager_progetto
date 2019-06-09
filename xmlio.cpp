@@ -64,10 +64,9 @@ void XmlIO::write(const Qontainer<MuseoItem *> & q) const
     QXmlStreamWriter writer(&file);
     writer.setAutoFormatting(true); // Per leggibilità del file XML
     writer.writeStartDocument();    // Scrive le intestazioni XML
-    writer.writeComment("File di salvataggio dell'applicazione. Non modificare a mano.");
     writer.writeStartElement("root");
-    auto cit = q.c_begin();
-    while(cit!= q.c_end()) {
+    auto cit = q.begin();
+    while(cit!= q.end()) {
         const MuseoItem* it=*cit;
         const QString tipo=QString::fromStdString(it->getTipo());
         writer.writeEmptyElement(tipo);

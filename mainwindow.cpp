@@ -8,10 +8,11 @@
 #include <QAction>
 #include <QMessageBox>
 #include <QLineEdit>
+#include <insertitem.h>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QWidget(parent),searchbar(new QLineEdit(this)),
-      view(new QListView(this))
+    : QWidget(parent),searchbar(new QLineEdit(this)),insert(new InsertItem(this)),
+      view(new TableView(this))
 {
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
     setFixedSize(QSize(500,550));
@@ -63,12 +64,24 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(menuBar);
     mainLayout->addLayout(searchLayout);
     mainLayout->addWidget(view, 0);
+    mainLayout->addWidget(insert);
     /*mainLayout->addLayout(buttonsLayout, 50);*/
 
+
+    /*connect(addDocAction,SIGNAL(triggered()),insert,SLOT(docView()));
+    connect(addStatueAction,SIGNAL(triggered()),insert,SLOT(statueView()));
+    connect(addPicAction,SIGNAL(triggered()),insert,SLOT(pictureView()));*/
+    //connect(insert, SIGNAL(inserito()), this, SLOT(addItem()));
 
 }
 
 MainWindow::~MainWindow()
 {
+
+}
+
+void MainWindow::addItem() const
+{
+
 
 }

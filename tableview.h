@@ -5,6 +5,7 @@
 
 class TableView : public QTableView
 {
+public:
     TableView(QWidget* = nullptr);
     QSize sizeHint() const override;
     void mousePressEvent(QMouseEvent*) override;

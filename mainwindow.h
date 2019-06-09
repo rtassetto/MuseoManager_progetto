@@ -4,7 +4,8 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QLineEdit>
-#include <QListView>
+#include <tableview.h>
+#include <insertitem.h>
 
 class MainWindow : public QWidget
 {
@@ -14,8 +15,11 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 private:
+    InsertItem* insert;
     QLineEdit* searchbar;
-    QListView* view;
+    TableView* view;
+private slots:
+    void addItem() const;
 };
 
 #endif // MAINWINDOW_H
