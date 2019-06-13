@@ -1,55 +1,28 @@
 #include "documentitem.h"
 
-DocumentItem::DocumentItem(string n, string a, string d, string f, QDate dS, categoriaD c, string t):MuseoItem(n,a,d,f,dS),cat(c),testo(t)
+DocumentItem::DocumentItem(string n, string a, string d, QDate dS, QDate dD):MuseoItem(n,a,d,dS),dataDocumento(dD)
 {
 
 }
 
-DocumentItem::DocumentItem(const DocumentItem &m):MuseoItem(m),cat(m.cat), testo(m.testo)
+DocumentItem::DocumentItem(const DocumentItem &m):MuseoItem(m),dataDocumento(m.dataDocumento)
 {
 
 }
 
-std::string DocumentItem::getCategoria() const
+
+QDate DocumentItem::getDataDocumento() const
 {
-    switch(cat)
-    {
-        case Rivista: return "rivista";
-        case Lettera: return "lettera";
-        case Libro: return "libro";
-    }
+    return dataDocumento;
 }
 
-std::string DocumentItem::getTesto() const
-{
-    return testo;
-}
-
-categoriaD DocumentItem::getEnum(const string& s)
-{
-    if(s=="rivista")
-    {
-        return categoriaD::Rivista;
-    }else if(s=="lettera")
-    {
-        return categoriaD::Lettera;
-    }else{
-        return categoriaD::Libro;
-    }
-}
-
-std::string DocumentItem::getTipo() const
-{
-    return "Documento";
-
-}
 
 bool DocumentItem::operator==(const DocumentItem & m)
 {
-    return MuseoItem::operator ==(m) && cat==m.cat && testo==m.testo;
+    return MuseoItem::operator ==(m) && dataDocumento==m.dataDocumento;
 }
 
 bool DocumentItem::operator!=(const DocumentItem & m)
 {
-    return MuseoItem::operator !=(m) || cat!=m.cat || testo!=m.testo;
+    return MuseoItem::operator !=(m) || dataDocumento!=m.dataDocumento;
 }

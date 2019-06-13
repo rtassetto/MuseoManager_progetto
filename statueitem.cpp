@@ -1,16 +1,16 @@
 #include "statueitem.h"
 
-StatueItem::StatueItem(string n, string a, string d, string f, QDate dS, categoriaS c, string s, string m):MuseoItem(n,a,d,f,dS),cat(c),soggetto(s),materiale(m)
+StatueItem::StatueItem(string n, string a, string d, QDate dS, categoriaS c, string s, string m, string f):MuseoItem(n,a,d,dS),cat(c),soggetto(s),materiale(m),foto(f)
 {
 
 }
 
-StatueItem::StatueItem(const StatueItem & s):MuseoItem(s),cat(s.cat),soggetto(s.soggetto),materiale(s.materiale)
+StatueItem::StatueItem(const StatueItem & s):MuseoItem(s),cat(s.cat),soggetto(s.soggetto),materiale(s.materiale),foto(s.foto)
 {
 
 }
 
-std::string StatueItem::getCategoria() const
+std::string StatueItem::getCategoriaS() const
 {
     switch(cat)
     {
@@ -32,7 +32,12 @@ std::string StatueItem::getMateriale() const
     return materiale;
 }
 
-categoriaS StatueItem::getEnum(const std::string & s)
+std::string StatueItem::getFotoS() const
+{
+    return foto;
+}
+
+categoriaS StatueItem::getEnumS(const std::string & s)
 {
     if(s=="busto")
     {
@@ -54,10 +59,10 @@ std::string StatueItem::getTipo() const
 
 bool StatueItem::operator==(const StatueItem & s)
 {
-    return MuseoItem::operator ==(s) && cat==s.cat && soggetto==s.soggetto && materiale==s.materiale;
+    return MuseoItem::operator ==(s) && cat==s.cat && soggetto==s.soggetto && materiale==s.materiale && foto==s.foto;
 }
 
 bool StatueItem::operator!=(const StatueItem & s)
 {
-    return MuseoItem::operator !=(s) || cat!=s.cat || soggetto!=s.soggetto || materiale!=s.materiale;
+    return MuseoItem::operator !=(s) || cat!=s.cat || soggetto!=s.soggetto || materiale!=s.materiale || foto!=s.foto;
 }

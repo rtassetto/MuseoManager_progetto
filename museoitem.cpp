@@ -1,9 +1,9 @@
 #include "museoitem.h"
 
-MuseoItem::MuseoItem(string n, string a, string d, string f, QDate dS):nome(n), autore(a), descrizione(d), foto(f), dataScoperta(dS)
+MuseoItem::MuseoItem(string n, string a, string d, QDate dS):nome(n), autore(a), descrizione(d), dataScoperta(dS)
 {}
 
-MuseoItem::MuseoItem(const MuseoItem & m):nome(m.nome), autore(m.autore), descrizione(m.descrizione), foto(m.foto), dataScoperta(m.dataScoperta)
+MuseoItem::MuseoItem(const MuseoItem & m):nome(m.nome), autore(m.autore), descrizione(m.descrizione), dataScoperta(m.dataScoperta)
 {}
 
 string MuseoItem::getNome() const
@@ -21,11 +21,6 @@ string MuseoItem::getDescrizione() const
     return descrizione;
 }
 
-string MuseoItem::getFoto() const
-{
-    return foto;
-}
-
 QDate MuseoItem::getData() const
 {
     return dataScoperta;
@@ -33,11 +28,11 @@ QDate MuseoItem::getData() const
 
 bool MuseoItem::operator==(const MuseoItem & m)
 {
-    return nome==m.nome && autore==m.autore && descrizione==m.descrizione && foto==m.foto && dataScoperta==m.dataScoperta;
+    return nome==m.nome && autore==m.autore && descrizione==m.descrizione && dataScoperta==m.dataScoperta;
 }
 
 bool MuseoItem::operator!=(const MuseoItem & m)
 {
-    return nome!=m.nome || autore!=m.autore || descrizione!=m.descrizione || foto!=m.foto || dataScoperta!=m.dataScoperta;
+    return nome!=m.nome || autore!=m.autore || descrizione!=m.descrizione || dataScoperta!=m.dataScoperta;
 }
 

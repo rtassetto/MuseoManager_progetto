@@ -1,19 +1,18 @@
 #include "pictureitem.h"
 
-PictureItem::PictureItem(string n, string a, string d, string f, QDate dS, categoriaP c, string s, string m):MuseoItem(n,a,d,f,dS),cat(c),soggetto(s),movimentoArtistico(m)
+PictureItem::PictureItem(string n, string a, string d, QDate dS, categoriaP c, std::string s, string m, string f):MuseoItem(n,a,d,dS),cat(c),soggetto(s),movimentoArtistico(m),foto(f)
 {}
 
-PictureItem::PictureItem(const PictureItem & p):MuseoItem(p),cat(p.cat),soggetto(p.soggetto),movimentoArtistico(p.movimentoArtistico)
+PictureItem::PictureItem(const PictureItem & p):MuseoItem(p),cat(p.cat),soggetto(p.soggetto),movimentoArtistico(p.movimentoArtistico),foto(p.foto)
 {}
 
-std::string PictureItem::getCategoria() const
+std::string PictureItem::getCategoriaP() const
 {
     switch(cat)
     {
         case Ritratto: return "ritratto";
         case Paesaggio: return "paesaggio";
         case Naturamorta: return "naturamorta";
-        case Allegoria: return "allegoria";
         case Fotografia: return "fotografia";
     }
 }
@@ -28,7 +27,7 @@ std::string PictureItem::getMovimento() const
     return movimentoArtistico;
 }
 
-categoriaP PictureItem::getEnum(const std::string & s)
+categoriaP PictureItem::getEnumP(const std::string & s)
 {
     if(s=="ritratto")
     {
@@ -38,11 +37,14 @@ categoriaP PictureItem::getEnum(const std::string & s)
         return categoriaP::Paesaggio;
     }else if(s=="naturamorta"){
         return categoriaP::Naturamorta;
-    }else if(s=="allegoria"){
-        return categoriaP::Allegoria;
     }else{
         return categoriaP::Fotografia;
     }
+}
+
+std::string PictureItem::getFotoP() const
+{
+    return foto;
 }
 
 std::string PictureItem::getTipo() const
@@ -52,10 +54,10 @@ std::string PictureItem::getTipo() const
 
 bool PictureItem::operator==(const PictureItem & p)
 {
-     return MuseoItem::operator ==(p) && cat==p.cat && soggetto==p.soggetto && movimentoArtistico==p.movimentoArtistico;
+     return MuseoItem::operator ==(p) && cat==p.cat && soggetto==p.soggetto && movimentoArtistico==p.movimentoArtistico && foto==p.foto;
 }
 
 bool PictureItem::operator!=(const PictureItem & p)
 {
-    return MuseoItem::operator !=(p) || cat!=p.cat || soggetto!=p.soggetto || movimentoArtistico!=p.movimentoArtistico;
+    return MuseoItem::operator !=(p) || cat!=p.cat || soggetto!=p.soggetto || movimentoArtistico!=p.movimentoArtistico || foto!=p.foto;
 }

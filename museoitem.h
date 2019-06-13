@@ -10,18 +10,16 @@ private:
     string nome;
     string autore;
     string descrizione;
-    string foto;
     QDate dataScoperta;
 
 public:
     //costruttori
-    MuseoItem(string,string,string,string,QDate);
+    MuseoItem(string,string,string,QDate);
     MuseoItem(const MuseoItem&);
     //metodi get
     string getNome() const;
     string getAutore() const;
     string getDescrizione() const;
-    string getFoto() const;
     QDate getData()const;
     //metodi virtuali
     virtual ~MuseoItem()=default;

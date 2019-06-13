@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <tableview.h>
 #include <insertitem.h>
+#include <QMessageBox>
 
 class MainWindow : public QWidget
 {
@@ -20,6 +21,9 @@ private:
     TableView* view;
 private slots:
     void addItem() const;
+    void closeRequest();
+ signals:
+    void confirmExit();
 };
 
 #endif // MAINWINDOW_H

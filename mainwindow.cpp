@@ -6,9 +6,9 @@
 #include <QMenuBar>
 #include <QMenu>
 #include <QAction>
-#include <QMessageBox>
 #include <QLineEdit>
 #include <insertitem.h>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent),searchbar(new QLineEdit(this)),insert(new InsertItem(this)),
@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     QMenuBar* menuBar = new QMenuBar();
     QMenu* menu = new QMenu("File", menuBar);
     QAction* saveAction = new QAction("Salva", menu);
-    QAction* exitAction = new QAction("Esci", menu); //aggiungere controllo, quando clicco per uscire controllare se non ho salvato mi chiede di salvare
+    QAction* exitAction = new QAction("Esci", menu);
     QMenu* add = new QMenu("Aggiungi", menuBar);
     QAction* addStatueAction= new QAction("Nuova statua", add);
     QAction* addDocAction= new QAction("Nuovo documento", add);
@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(insert);
     /*mainLayout->addLayout(buttonsLayout, 50);*/
 
-
+    connect(exitAction,SIGNAL(triggered(bool)),this,SLOT(closeRequest()));
     /*connect(addDocAction,SIGNAL(triggered()),insert,SLOT(docView()));
     connect(addStatueAction,SIGNAL(triggered()),insert,SLOT(statueView()));
     connect(addPicAction,SIGNAL(triggered()),insert,SLOT(pictureView()));*/
@@ -80,8 +80,30 @@ MainWindow::~MainWindow()
 
 }
 
+
 void MainWindow::addItem() const
 {
+
+
+}
+
+void MainWindow::closeRequest()
+{
+    QMessageBox dialog;
+    QPushButton* saveButton=dialog.addButton("Salva",QMessageBox::ActionRole);
+    QPushButton* exitButton=dialog.addButton("Esci senza salvare",QMessageBox::ActionRole);
+    QPushButton* cancelButton=dialog.addButton("Annulla",QMessageBox::ActionRole);
+    dialog.setText("Il documento non e' salvato.");
+    dialog.setInformativeText("Vuoi effettuare un salvataggio?");
+    dialog.setDefaultButton(saveButton);
+    dialog.exec();
+    if(dialog.clickedButton()==saveButton){
+        this->close();
+    }else if(dialog.clickedButton()==exitButton){
+        this->close();
+    }else if(dialog.clickedButton()==cancelButton){
+        dialog.close();
+    }
 
 
 }

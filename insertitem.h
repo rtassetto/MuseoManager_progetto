@@ -29,11 +29,31 @@ private:
     QLineEdit* desc;
     QDateEdit* data;
 
-    //docItem
-    QLabel* catDLabel;
-    QComboBox* catDBox;
+    //bookItem
+
+    QLabel* dataLibroLabel;
+    QDateEdit* dataLibro;
+    QLabel* prefazioneLabel;
+    QLineEdit* prefazione;
+    QLabel* copertinaLabel;
+
+
+    //letterItem
+
+    QLabel* dataLetteraLabel;
+    QDateEdit* dataLettera;
+    QLabel* destinatarioLabel;
+    QLineEdit* destinatario;
     QLabel* testoLabel;
     QLineEdit* testo;
+
+    //magazineItem
+    QLabel* primaPaginaLabel;
+    QLabel* dataMagazineLabel;
+    QDateEdit* dataMagazine;
+    QLabel* catMLabel;
+    QComboBox* catMBox;
+
 
     //statueItem
     QLabel* catSLabel;
@@ -52,7 +72,7 @@ private:
     QLineEdit* movimento;
 
     QPushButton* inserisci;
-    QPushButton* annulla;
+
 
 public:
     explicit InsertItem(QWidget *parent = 0);
@@ -61,9 +81,18 @@ public:
     string getAutore() const;
     string getData() const;
     string getDescrizione() const;
-    string getCatD() const;
+
+    string getDataMagazine()const;
+    string getDataLibro()const;
+    string getDataLettera()const;
+
+    string getPrefazione()const;
+    string getDestinatario()const;
+
+    string getCatM() const;
     string getCatS() const;
     string getCatP() const;
+
     string getSoggettoS() const;
     string getSoggettoP() const;
     string getMovimento() const;

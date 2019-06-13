@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>data/style.css</file>
-    </qresource>
-    <qresource prefix="/">
         <file>data/images/icon.png</file>
-        <file>data/images/docicon.png</file>
         <file>data/images/statueicon.png</file>
         <file>data/images/painticon.png</file>
+        <file>data/images/magazine.png</file>
+        <file>data/images/book.png</file>
+        <file>data/images/letter.png</file>
     </qresource>
 </RCC>

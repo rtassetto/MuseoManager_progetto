@@ -5,6 +5,9 @@
 #include<statueitem.h>
 #include<documentitem.h>
 #include<pictureitem.h>
+#include<bookitem.h>
+#include<letteritem.h>
+#include<magazineitem.h>
 
 class XmlIO
 {

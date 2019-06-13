@@ -11,15 +11,17 @@ private:
     categoriaS cat;
     string soggetto;
     string materiale;
+    string foto;
 public:
     //costruttori
-    StatueItem(string , string , string , string , QDate , categoriaS, string, string);
+    StatueItem(string , string , string ,QDate , categoriaS, string, string, string);
     StatueItem(const StatueItem&);
     //get
-    string getCategoria()const;
+    string getCategoriaS()const;
     string getSoggetto()const;
     string getMateriale()const;
-    static categoriaS getEnum(const string&);
+    string getFotoS()const;
+    static categoriaS getEnumS(const string&);
     string getTipo()const override;
     //operatori
     bool operator==(const StatueItem&);
