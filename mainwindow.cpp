@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
       view(new TableView(this))
 {
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
-    setFixedSize(QSize(500,550));
+    setFixedSize(QSize(800,600));
     setWindowIcon(QIcon(":/data/images/icon.png"));
 
     //Pulsanti
@@ -30,19 +30,11 @@ MainWindow::MainWindow(QWidget *parent)
     QMenu* menu = new QMenu("File", menuBar);
     QAction* saveAction = new QAction("Salva", menu);
     QAction* exitAction = new QAction("Esci", menu);
-    QMenu* add = new QMenu("Aggiungi", menuBar);
-    QAction* addStatueAction= new QAction("Nuova statua", add);
-    QAction* addDocAction= new QAction("Nuovo documento", add);
-    QAction* addPicAction= new QAction("Nuovo dipinto", add);
 
     // Setup del menù
     menuBar->addMenu(menu);
     menu->addAction(saveAction);
     menu->addAction(exitAction);
-    menuBar->addMenu(add);
-    add->addAction(addStatueAction);
-    add->addAction(addDocAction);
-    add->addAction(addPicAction);
 
     // LAYOUT
     QVBoxLayout* mainLayout = new QVBoxLayout(this);

@@ -17,10 +17,11 @@ void Modello::load(const string& file)
     q = io.read();
 }
 
-void Modello::save(const string& file) const
+void Modello::save(const string& file)
 {
     XmlIO io(file);
     io.write(q);
+    isSaved=true;
 }
 
 bool Modello::getSaved() const
@@ -47,6 +48,21 @@ unsigned int Modello::getDataCapacity() const
 bool Modello::isDataEmpty() const
 {
     return q.isEmpty();
+}
+
+categoriaM Modello::getEnumM(const std::string & s)
+{
+    return MagazineItem::getEnumM(s);
+}
+
+categoriaS Modello::getEnumS(const std::string & s)
+{
+    return StatueItem::getEnumS(s);
+}
+
+categoriaP Modello::getEnumP(const std::string & s)
+{
+    return PictureItem::getEnumP(s);
 }
 
 void Modello::push_end(MuseoItem * m)
@@ -81,21 +97,6 @@ MuseoItem *Modello::position(unsigned int i)
     return q.position(i);
 }
 
-void Modello::clear()
-{
-
-}
-
-void Modello::print() const
-{
-
-}
-/*
-void Modello::setNewPath(std::string)
-{
-
-}
-*/
 
 
 

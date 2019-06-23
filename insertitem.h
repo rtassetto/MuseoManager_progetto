@@ -11,6 +11,7 @@
 #include <QDateEdit>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QFileDialog>
 
 using std::string;
 
@@ -36,6 +37,8 @@ private:
     QLabel* prefazioneLabel;
     QLineEdit* prefazione;
     QLabel* copertinaLabel;
+    QLabel* copertinaPath;
+    QPushButton* copertinaButton;
 
 
     //letterItem
@@ -49,6 +52,8 @@ private:
 
     //magazineItem
     QLabel* primaPaginaLabel;
+    QLabel* primaPaginaPath;
+    QPushButton* primaPaginaButton;
     QLabel* dataMagazineLabel;
     QDateEdit* dataMagazine;
     QLabel* catMLabel;
@@ -62,6 +67,9 @@ private:
     QLabel* soggettoSLabel;
     QLineEdit* materiale;
     QLineEdit* soggettoS;
+    QLabel* fotoSLabel;
+    QLabel* fotoSPath;
+    QPushButton* fotoSButton;
 
     //pictureItem
     QLabel* catPLabel;
@@ -70,23 +78,28 @@ private:
     QLabel* movimentoLabel;
     QLineEdit* soggettoP;
     QLineEdit* movimento;
+    QLabel* fotoPLabel;
+    QLabel* fotoPPath;
+    QPushButton* fotoPButton;
 
     QPushButton* inserisci;
+    QPushButton* reset;
 
 
 public:
-    explicit InsertItem(QWidget *parent = 0);
+    explicit InsertItem(QWidget *parent = nullptr);
     string getTipo()const;
     string getNome() const;
     string getAutore() const;
-    string getData() const;
+    QDate getData() const;
     string getDescrizione() const;
 
-    string getDataMagazine()const;
-    string getDataLibro()const;
-    string getDataLettera()const;
+    QDate getDataMagazine()const;
+    QDate getDataLibro()const;
+    QDate getDataLettera()const;
 
     string getPrefazione()const;
+    string getCopertina()const;
     string getDestinatario()const;
 
     string getCatM() const;
@@ -98,10 +111,18 @@ public:
     string getMovimento() const;
     string getMateriale() const;
     string getTesto() const;
+    string getFotoS() const;
+    string getFotoP() const;
+    string getPrimaPagina() const;
 signals:
     void inserito();
 public slots:
     void setView(QString);
+    void addCopertina();
+    void addPrimaPagina();
+    void addFotoP();
+    void addFotoS();
+    void clearField();
 };
 
 #endif // INSERTITEM_H

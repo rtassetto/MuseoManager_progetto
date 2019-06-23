@@ -11,14 +11,14 @@
 class MainWindow : public QWidget
 {
     Q_OBJECT
-
+private:
+    QLineEdit* searchbar;
+    InsertItem* insert;
+    TableView* view;
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-private:
-    InsertItem* insert;
-    QLineEdit* searchbar;
-    TableView* view;
+
 private slots:
     void addItem() const;
     void closeRequest();
