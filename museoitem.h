@@ -19,6 +19,9 @@ public:
     //metodi get
     string getNome() const;
     string getAutore() const;
+    void setNome(const string&);
+    void setAutore(const string&);
+
     string getDescrizione() const;
     QDate getData()const;
     //metodi virtuali

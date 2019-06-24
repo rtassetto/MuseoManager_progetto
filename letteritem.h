@@ -5,8 +5,9 @@
 class LetterItem : public DocumentItem
 {
 private:
-    string testo;
     string destinatario;
+    string testo;
+
 public:
     //costruttori
     LetterItem(string , string , string , QDate , QDate, string, string);

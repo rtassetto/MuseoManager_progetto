@@ -80,7 +80,6 @@ public:
     void erase(unsigned int=0);
     void erase(unsigned int,unsigned int);
     T& position(unsigned int);
-    void print() const ;
 
     //iteratori
     iteratore begin() const;
@@ -370,7 +369,7 @@ void Qontainer<T>::resize(){
 template<typename T>
 void Qontainer<T>::push_back(const T& t){ //aggiungo in coda
     if (!(size<capacity))resize();
-    punt[size+1]=t;
+    punt[size++]=t;
 }
 
 template<class T>
@@ -407,10 +406,9 @@ void  Qontainer<T>::erase(T t)
 
 template <typename T>
 T& Qontainer<T>::position(unsigned int index){
-    if(index<0 || index > size-1){
-        throw std::out_of_range("Indice fuori dai limiti");
+    if(!(index<0 || index > size-1)){
+            return punt[index];
     }
-    return punt[index];
 }
 
 template <typename T>
@@ -422,15 +420,6 @@ template <typename T>
 typename Qontainer<T>::iteratore Qontainer<T>::end()const{
     return iteratore(punt+(size));
 }
-template <typename T>
-void Qontainer<T>::print() const {
-    if(size==0) std::cout<<"Vector e' vuoto "<<std::endl;
-    for(unsigned int i=0; i< size; i++){
-        std::cout<<punt[i]<<" ";
-    }
-    std::cout<<std::endl;
-}
-
 
 
 #endif // QONTAINER_H

@@ -18,12 +18,12 @@ int QTableModel::rowCount(const QModelIndex & ) const
 
 int QTableModel::columnCount(const QModelIndex & ) const
 {
-    return 5;
+    return 6;
 }
 
 QVariant QTableModel::data(const QModelIndex & index, int n) const
 {
-    if (!index.isValid() || index.row() >= model->getDataSize() || index.row()<0)
+    if (!index.isValid() || index.row() >= static_cast<int>(model->getDataSize()) || index.row()<0)
         return QVariant();
     switch(n){
     case Qt::BackgroundColorRole:
@@ -31,7 +31,7 @@ QVariant QTableModel::data(const QModelIndex & index, int n) const
     case Qt::TextAlignmentRole:
         return QVariant ( Qt::AlignVCenter | Qt::AlignHCenter );
     case Qt::SizeHintRole:
-        return QSize( 500, 0 );
+        return QSize( 700, 0 );
     case Qt::EditRole:
     case Qt::DisplayRole:
     {
@@ -57,9 +57,49 @@ QVariant QTableModel::data(const QModelIndex & index, int n) const
     }
 }
 
-void QTableModel::removeRows(int row, int count, const QModelIndex &parent)
+bool QTableModel::setData(const QModelIndex & index, const QVariant & val, int role)
 {
+    if (!index.isValid() && role != Qt::EditRole)
+        return false;
+    switch(index.column())
+    {
+    case 1:
+        model->position(static_cast<unsigned int>(index.row()))->setNome(val.toString().toStdString()); break;
+    case 2:
+        model->position(static_cast<unsigned int>(index.row()))->setAutore(val.toString().toStdString()); break;
+    }
+    emit dataChanged(index, index);
+    return true;
+}
 
+bool QTableModel::removeRows(int row, int count, const QModelIndex &)
+{
+    beginRemoveRows(QModelIndex(), row, row + count - 1);
+    for (int i = 0; i < count; ++i)
+    {
+        model->erase(i);
+    }
+    endRemoveRows();
+    return true;
+}
+
+Qt::ItemFlags QTableModel::flags(const QModelIndex &index) const
+{
+    if (!index.isValid())
+        return Qt::ItemIsEnabled;
+    if(index.column()==0 || index.column()==4)
+        return QAbstractTableModel::flags(index);
+    return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+}
+
+void QTableModel::save(const std::string &file) const
+{
+    model->save(file);
+}
+
+void QTableModel::load(const std::string &file) const
+{
+    model->load(file);
 }
 
 QVariant QTableModel::headerData(int section, Qt::Orientation orientation, int n) const
@@ -72,15 +112,15 @@ QVariant QTableModel::headerData(int section, Qt::Orientation orientation, int n
     }
     if (orientation == Qt::Horizontal) {
         switch (section) {
-        case 0:
-            return QString("Nome");
         case 1:
-            return QString("Autore");
+            return QString("Nome");
         case 2:
-            return QString("Data Scoperta");
+            return QString("Autore");
         case 3:
-            return QString("Descrizione");
+            return QString("Data Scoperta");
         case 4:
+            return QString("Descrizione");
+        case 5:
             return QString("Tipo");
         default:
             return QVariant();
@@ -93,14 +133,14 @@ QVariant QTableModel::headerData(int section, Qt::Orientation orientation, int n
 bool QTableModel::insertRows(int begin, int count, const QModelIndex &parent)
 {
     beginInsertRows(parent, begin, begin + count - 1);
-    std::string tipo = insert->getTipo();
+    string tipo = insert->getTipo();
     if(tipo=="Libro"){
         model->push_end(new BookItem(insert->getNome(),insert->getAutore(),insert->getDescrizione(),insert->getData(),insert->getDataLibro(),insert->getPrefazione(),insert->getCopertina()));
     } else if (tipo=="Lettera"){
         model->push_end(new LetterItem(insert->getNome(),insert->getAutore(),insert->getDescrizione(),insert->getData(),insert->getDataLettera(),insert->getDestinatario(),insert->getTesto()));
     } else if (tipo=="Magazine"){
        model->push_end(new MagazineItem(insert->getNome(),insert->getAutore(),insert->getDescrizione(),insert->getData(),insert->getDataMagazine(),insert->getPrimaPagina(),model->getEnumM(insert->getCatM())));
-    } else if (tipo=="Statua"){
+    } else if (tipo=="Scultura"){
         model->push_end(new StatueItem(insert->getNome(),insert->getAutore(),insert->getDescrizione(),insert->getData(),model->getEnumS(insert->getCatS()),insert->getSoggettoS(),insert->getMateriale(),insert->getFotoS()));
     }else if (tipo=="Pittura"){
         model->push_end(new PictureItem(insert->getNome(),insert->getAutore(),insert->getDescrizione(),insert->getData(),model->getEnumP(insert->getCatP()),insert->getSoggettoP(),insert->getMovimento(),insert->getFotoP()));
@@ -109,3 +149,13 @@ bool QTableModel::insertRows(int begin, int count, const QModelIndex &parent)
     return true;
 }
 
+bool QTableModel::searchMatch(unsigned int r, const QRegExp& s, const QString& a) const{
+    if(a=="Tipo")
+        return QString::fromStdString(model->position(r)->getTipo()).contains(s);
+    else if(a=="Nome")
+        return QString::fromStdString(model->position(r)->getNome()).contains(s);
+    else if(a=="Autore")
+        return QString::fromStdString(model->position(r)->getAutore()).contains(s);
+    else
+        return false;
+}

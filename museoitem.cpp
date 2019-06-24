@@ -16,6 +16,16 @@ string MuseoItem::getAutore() const
     return autore;
 }
 
+void MuseoItem::setNome(const std::string &s)
+{
+    nome=s;
+}
+
+void MuseoItem::setAutore(const std::string &s)
+{
+    autore=s;
+}
+
 string MuseoItem::getDescrizione() const
 {
     return descrizione;

@@ -102,7 +102,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
 
     museumType->setFocus();
     museumType->addItem(QIcon(":/data/images/statueicon.png"),"Scultura");
-    museumType->addItem(QIcon(":/data/images/painticon.png"),"Dipinto");
+    museumType->addItem(QIcon(":/data/images/painticon.png"),"Pittura");
     museumType->addItem(QIcon(":/data/images/book.png"),"Libro");
     museumType->addItem(QIcon(":/data/images/magazine.png"),"Magazine");
     museumType->addItem(QIcon(":/data/images/letter.png"),"Lettera");
@@ -272,7 +272,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
     destinatario->setVisible(false);
     testoLabel->setVisible(false);
     testo->setVisible(false);
-    //Dipinto
+    //Pittura
     catPLabel->setVisible(false);
     catPBox->setVisible(false);
     soggettoPLabel->setVisible(false);
@@ -321,19 +321,23 @@ void InsertItem::clearField(){
 
 void InsertItem::addCopertina(){
     QString file = QFileDialog::getOpenFileName(this,tr("Inserisci immagine"),"../MuseoManager/data/images", tr("Image Files (*.png *.jpg *.bmp)"));
+
     copertinaLabel->setPixmap(QPixmap(file));
+    copertinaLabel->pixmap()->scaled(copertinaLabel->size(), Qt::KeepAspectRatio);
     copertinaLabel->setScaledContents(true);
     copertinaPath->setText(file);
 }
 void InsertItem::addPrimaPagina(){
     QString file = QFileDialog::getOpenFileName(this,tr("Inserisci immagine"),"../MuseoManager/data/images", tr("Image Files (*.png *.jpg *.bmp)"));
     primaPaginaLabel->setPixmap(QPixmap(file));
+    primaPaginaLabel->pixmap()->scaled(primaPaginaLabel->size(), Qt::KeepAspectRatio);
     primaPaginaLabel->setScaledContents(true);
     primaPaginaPath->setText(file);
 }
 void InsertItem::addFotoP(){
     QString file = QFileDialog::getOpenFileName(this,tr("Inserisci immagine"),"../MuseoManager/data/images", tr("Image Files (*.png *.jpg *.bmp)"));
     fotoPLabel->setPixmap(QPixmap(file));
+    fotoPLabel->pixmap()->scaled(fotoPLabel->size(), Qt::KeepAspectRatio);
     fotoPLabel->setScaledContents(true);
     fotoPPath->setText(file);
 }
@@ -341,6 +345,7 @@ void InsertItem::addFotoP(){
 void InsertItem::addFotoS(){
     QString file = QFileDialog::getOpenFileName(this,tr("Inserisci immagine"),"../MuseoManager/data/images", tr("Image Files (*.png *.jpg *.bmp)"));
     fotoSLabel->setPixmap(QPixmap(file));
+    fotoSLabel->pixmap()->scaled(fotoSLabel->size(), Qt::KeepAspectRatio);
     fotoSLabel->setScaledContents(true);
     fotoSPath->setText(file);
 }
@@ -487,7 +492,7 @@ void InsertItem::setView(QString s)
     destinatario->setVisible(false);
     testoLabel->setVisible(false);
     testo->setVisible(false);
-    //Dipinto
+    //Pittura
     catPLabel->setVisible(false);
     catPBox->setVisible(false);
     soggettoPLabel->setVisible(false);
@@ -531,7 +536,7 @@ void InsertItem::setView(QString s)
         fotoSLabel->setVisible(true);
         fotoSPath->setVisible(true);
         fotoSButton->setVisible(true);
-    }else if(s=="Dipinto"){
+    }else if(s=="Pittura"){
         catPLabel->setVisible(true);
         catPBox->setVisible(true);
         soggettoPLabel->setVisible(true);

@@ -12,6 +12,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QFileDialog>
+#include <museoitem.h>
 
 using std::string;
 
