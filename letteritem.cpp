@@ -16,6 +16,16 @@ std::string LetterItem::getTesto() const
     return testo;
 }
 
+void LetterItem::setDestinatario(const std::string & s)
+{
+    destinatario=s;
+}
+
+void LetterItem::setTesto(const std::string & s)
+{
+    testo=s;
+}
+
 std::string LetterItem::getTipo() const
 {
     return "Lettera";

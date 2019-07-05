@@ -47,6 +47,22 @@ std::string PictureItem::getFotoP() const
     return foto;
 }
 
+void PictureItem::setSoggetto(const std::string & s)
+{
+    soggetto=s;
+}
+
+void PictureItem::setMovimento(const std::string & s)
+{
+    movimentoArtistico=s;
+}
+
+void PictureItem::setFotoP(const std::string & s)
+{
+    foto=s;
+}
+
+
 std::string PictureItem::getTipo() const
 {
     return "Pittura";

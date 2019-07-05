@@ -14,6 +14,9 @@ public:
     //metodi get
     string getPrefazione()const;
     string getCopertina()const;
+    //metodi set
+    void setPrefazione(const string&);
+    void setCopertina(const string&);
     string getTipo()const override;
     //operatori
     bool operator==(const BookItem&);

@@ -15,6 +15,11 @@ public:
     //metodi get
     string getDestinatario()const;
     string getTesto()const;
+
+    //metodi set
+    void setDestinatario(const string&);
+    void setTesto(const string&);
+
     string getTipo()const override;
     //operatori
     bool operator==(const LetterItem&);

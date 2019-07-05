@@ -16,6 +16,11 @@ QDate DocumentItem::getDataDocumento() const
     return dataDocumento;
 }
 
+void DocumentItem::setDataDocumento(const QDate &q)
+{
+    dataDocumento=q;
+}
+
 
 bool DocumentItem::operator==(const DocumentItem & m)
 {

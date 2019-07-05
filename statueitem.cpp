@@ -52,6 +52,21 @@ categoriaS StatueItem::getEnumS(const std::string & s)
     }
 }
 
+void StatueItem::setSoggetto(const std::string & s)
+{
+    soggetto=s;
+}
+
+void StatueItem::setMateriale(const std::string & s)
+{
+    materiale=s;
+}
+
+void StatueItem::setFotoS(const std::string & s)
+{
+    foto=s;
+}
+
 std::string StatueItem::getTipo() const
 {
     return "Statua";

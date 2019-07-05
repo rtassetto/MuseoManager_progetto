@@ -10,27 +10,33 @@
 #include <museoitem.h>
 #include <qtablemodel.h>
 #include <qproxymodel.h>
+#include <searchview.h>
 
 class MainWindow : public QWidget
 {
     Q_OBJECT
 private:
-    QLineEdit* searchbar;
+    SearchView* search;
     InsertItem* insert;
     QProxyModel* proxymodel;
     QTableModel* model;
     TableView* view;
+    QString file;
 
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindow(QWidget *parent = 0, bool toLoad=true);
     ~MainWindow() override=default;
 
 private slots:
     void addItem() const;
     void closeRequest();
-    void clearSearchBar();
     void showInsert();
+    void searchTextChanged();
+    void showMain();
+    void save();
+    void load();
  signals:
+    void noInsert();
     void confirmExit();
 };
 

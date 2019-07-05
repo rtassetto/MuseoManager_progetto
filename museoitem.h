@@ -19,11 +19,14 @@ public:
     //metodi get
     string getNome() const;
     string getAutore() const;
-    void setNome(const string&);
-    void setAutore(const string&);
-
     string getDescrizione() const;
     QDate getData()const;
+    //metodi set
+    void setNome(const string&);
+    void setAutore(const string&);
+    void setDescrizione(const string&);
+    void setData(const QDate&);
+
     //metodi virtuali
     virtual ~MuseoItem()=default;
     virtual string getTipo() const=0;

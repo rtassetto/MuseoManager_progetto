@@ -16,12 +16,16 @@ public:
     //costruttori
     StatueItem(string , string , string ,QDate , categoriaS, string, string, string);
     StatueItem(const StatueItem&);
-    //get
+    //metodi get
     string getCategoriaS()const;
     string getSoggetto()const;
     string getMateriale()const;
     string getFotoS()const;
     static categoriaS getEnumS(const string&);
+    //metodi set,
+    void setSoggetto(const string&);
+    void setMateriale(const string&);
+    void setFotoS(const string&);
     string getTipo()const override;
     //operatori
     bool operator==(const StatueItem&);

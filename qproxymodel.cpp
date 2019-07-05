@@ -1,6 +1,6 @@
 #include "qproxymodel.h"
 
-QProxyModel::QProxyModel(QObject * parent,  const QComboBox * a): QSortFilterProxyModel(parent), attribute(a)
+QProxyModel::QProxyModel(QObject * parent,  QComboBox * a): QSortFilterProxyModel(parent), attribute(a)
 {
 
 }

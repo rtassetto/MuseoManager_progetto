@@ -8,7 +8,7 @@ class QProxyModel : public QSortFilterProxyModel
 private:
     const QComboBox* attribute;
 public:
-    QProxyModel(QObject* =nullptr, const QComboBox* =nullptr);
+    QProxyModel(QObject* =nullptr, QComboBox * =nullptr);
     void removeDisplayed();
     bool insertRows(int, int =1, const QModelIndex& = QModelIndex()) override;
     bool filterAcceptsRow(int, const QModelIndex&) const override;

@@ -16,6 +16,16 @@ std::string BookItem::getCopertina() const
     return copertina;
 }
 
+void BookItem::setPrefazione(const std::string & s)
+{
+    prefazione=s;
+}
+
+void BookItem::setCopertina(const std::string & s)
+{
+    copertina=s;
+}
+
 std::string BookItem::getTipo() const
 {
     return "Libro";

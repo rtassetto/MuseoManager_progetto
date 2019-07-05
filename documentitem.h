@@ -13,6 +13,8 @@ public:
     DocumentItem(const DocumentItem&);
     //metodi get
     QDate getDataDocumento() const;
+    //metodi set
+    void setDataDocumento(const QDate&);
     //operatori
     bool operator==(const DocumentItem&);
     bool operator!=(const DocumentItem&);

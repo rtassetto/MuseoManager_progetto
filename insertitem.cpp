@@ -19,6 +19,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
     //bookitem
     dataLibroLabel=new QLabel("Data pubblicazione del libro:",this);
     dataLibro=new QDateEdit(this);
+    dataLibro->setDisplayFormat(QString("dd.MM.yyyy"));
     prefazione=new QLineEdit(this);
     prefazioneLabel =new QLabel("Prefazione del libro:",this);
 
@@ -31,6 +32,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
 
     dataLetteraLabel=new QLabel("Data della lettera",this);
     dataLettera=new QDateEdit(this);
+    dataLettera->setDisplayFormat(QString("dd.MM.yyyy"));
     destinatarioLabel=new QLabel("Destinatario della lettera",this);
     destinatario=new QLineEdit(this);
     testoLabel=new QLabel("Testo della lettera:");
@@ -40,6 +42,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
 
     dataMagazineLabel=new QLabel("Data uscita del periodico",this);
     dataMagazine=new QDateEdit(this);
+    dataMagazine->setDisplayFormat(QString("dd.MM.yyyy"));
     catMBox=new QComboBox(this);
 
     primaPaginaLabel=new QLabel("Prima pagina del periodico:",this);
@@ -71,6 +74,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
     autore=new QLineEdit(this);
     desc=new QLineEdit(this);
     data=new QDateEdit(this);
+    data->setDisplayFormat(QString("dd.MM.yyyy"));
 
     catSBox=new QComboBox(this);
     materiale=new QLineEdit(this);
@@ -80,6 +84,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
     movimento=new QLineEdit(this);
     inserisci=new QPushButton("Inserisci",this);
     reset=new QPushButton("Reset",this);
+    annulla=new QPushButton("Annulla",this);
 
     catMBox->addItem("Giornale");
     catMBox->addItem("Quotidiano");
@@ -206,6 +211,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
     materialeLayout->addWidget(materiale);
 
     buttonLayout->addWidget(inserisci);
+    buttonLayout->addWidget(annulla);
     buttonLayout->addWidget(reset);
 
     attributiLayout->addLayout(nomeLayout);
@@ -248,7 +254,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
     mainLayout->addLayout(movimentoLayout);
     mainLayout->addLayout(materialeLayout);*/
 
-
+    fotoSPath->setVisible(false);
     //Magazine
     catMLabel->setVisible(false);
     catMBox->setVisible(false);
@@ -286,11 +292,13 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
 
     connect(inserisci, SIGNAL(clicked(bool)), this, SIGNAL(inserito()));
     connect(reset,SIGNAL(clicked(bool)),this,SLOT(clearField()));
+    connect(annulla,SIGNAL(clicked(bool)),this,SIGNAL(noInsert()));
     connect(museumType,SIGNAL(currentTextChanged(QString)),this,SLOT(setView(QString)));
     connect(copertinaButton,SIGNAL(clicked()),this,SLOT(addCopertina()));
     connect(primaPaginaButton,SIGNAL(clicked()),this,SLOT(addPrimaPagina()));
     connect(fotoPButton,SIGNAL(clicked()),this,SLOT(addFotoP()));
     connect(fotoSButton,SIGNAL(clicked()),this,SLOT(addFotoS()));
+
 
 }
 
@@ -318,6 +326,8 @@ void InsertItem::clearField(){
     soggettoP->setText("");
     movimento->setText("");
 }
+
+
 
 void InsertItem::addCopertina(){
     QString file = QFileDialog::getOpenFileName(this,tr("Inserisci immagine"),"../MuseoManager/data/images", tr("Image Files (*.png *.jpg *.bmp)"));
@@ -510,7 +520,7 @@ void InsertItem::setView(QString s)
         prefazione->setVisible(true);
         copertinaLabel->setVisible(true);
         copertinaButton->setVisible(true);
-        copertinaPath->setVisible(true);
+        //copertinaPath->setVisible(true);
     }else if(s=="Magazine"){
         catMLabel->setVisible(true);
         catMBox->setVisible(true);
@@ -518,7 +528,7 @@ void InsertItem::setView(QString s)
         dataMagazine->setVisible(true);
         primaPaginaLabel->setVisible(true);
         primaPaginaButton->setVisible(true);
-        primaPaginaPath->setVisible(true);
+        //primaPaginaPath->setVisible(true);
     }else if(s=="Lettera"){
         dataLetteraLabel->setVisible(true);
         dataLettera->setVisible(true);
@@ -534,7 +544,7 @@ void InsertItem::setView(QString s)
         materialeLabel->setVisible(true);
         materiale->setVisible(true);
         fotoSLabel->setVisible(true);
-        fotoSPath->setVisible(true);
+        //fotoSPath->setVisible(true);
         fotoSButton->setVisible(true);
     }else if(s=="Pittura"){
         catPLabel->setVisible(true);
@@ -545,7 +555,7 @@ void InsertItem::setView(QString s)
         movimento->setVisible(true);
         fotoPButton->setVisible(true);
         fotoPLabel->setVisible(true);
-        fotoPPath->setVisible(true);
+        //fotoPPath->setVisible(true);
     }
 }
 

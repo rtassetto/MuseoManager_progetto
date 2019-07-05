@@ -11,8 +11,8 @@
 #include <QMessageBox>
 #include <museoitem.h>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QWidget(parent),searchbar(new QLineEdit(this)),insert(new InsertItem(this)),
+MainWindow::MainWindow(QWidget *parent, bool toLoad)
+    : QWidget(parent),search(new SearchView(this)),insert(new InsertItem(this)),
       view(new TableView(this))
 {
     insert->hide();
@@ -21,32 +21,20 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowIcon(QIcon(":/data/images/icon.png"));
 
 
-    QComboBox* searchAttribute = new QComboBox();
-    proxymodel = new QProxyModel(this, searchAttribute);
+
+    proxymodel = new QProxyModel(this, search->getType());
     model = new QTableModel(this, insert);
-    /*if(load)
-        loadData(); //caricamento modello*/
+    if(toLoad) load();
     proxymodel->setSourceModel(model);
     view->setModel(proxymodel);
 
-    QLabel* filterLabel=new QLabel("Filtra per:",this);
-    searchAttribute->addItem("Nome");
-    searchAttribute->addItem("Tipo");
-    searchAttribute->addItem("Autore");
-
-
-    //Pulsanti
-    QPushButton* clearSearchButton = new QPushButton("Clear", this);
-
-    // Dà un nome al pulsante per usarlo nel css
-    clearSearchButton->setObjectName("clearbutton");
-    clearSearchButton->setToolTip("Pulisci ricerca");
 
     // MENÙ e MENUBAR
     QMenuBar* menuBar = new QMenuBar();
     QMenu* menuFile = new QMenu("File", menuBar);
     QMenu* menuAdd = new QMenu("Aggiungi", menuBar);
-    QAction* addItemAction = new QAction("Salva", menuAdd);
+    QAction* addItemAction = new QAction("Inserisci nuovo", menuAdd);
+    QAction* loadAction=new QAction("Carica", menuFile);
     QAction* saveAction = new QAction("Salva", menuFile);
     QAction* exitAction = new QAction("Esci", menuFile);
 
@@ -54,38 +42,31 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar->addMenu(menuFile);
     menuBar->addMenu(menuAdd);
     menuAdd->addAction(addItemAction);
+    menuFile->addAction(loadAction);
     menuFile->addAction(saveAction);
     menuFile->addAction(exitAction);
 
     // LAYOUT
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
-    // Searchbar sottolayout
-    QHBoxLayout* searchLayout = new QHBoxLayout();
-    searchLayout->addWidget(searchbar);
-    searchLayout->addWidget(filterLabel);
-    searchLayout->addWidget(searchAttribute);
-    searchLayout->addWidget(clearSearchButton);
-    searchbar->setPlaceholderText("Cosa stai cercando? ...");
-
-    // Pulsanti sottolayout
-   /* QHBoxLayout* buttonsLayout = new QHBoxLayout();
-    buttonsLayout->addWidget(addButton);
-    buttonsLayout->addWidget(removeButton);
-    buttonsLayout->addWidget(saveButton);
-    buttonsLayout->addWidget(toggleButton);*/
 
     // Setup Main layout
     mainLayout->addWidget(menuBar);
-    mainLayout->addLayout(searchLayout);
-    mainLayout->addWidget(view, 0);
+    mainLayout->addWidget(search);
+    mainLayout->addWidget(view,0);
     mainLayout->addWidget(insert);
-    /*mainLayout->addLayout(buttonsLayout, 50);*/
 
+
+    connect(loadAction,SIGNAL(triggered(bool)),this,SLOT(load()));
+    connect(saveAction,SIGNAL(triggered(bool)),this,SLOT(save()));
     connect(exitAction,SIGNAL(triggered(bool)),this,SLOT(closeRequest()));
-    connect(clearSearchButton,SIGNAL(clicked()),this,SLOT(clearSearchBar()));
     connect(insert, SIGNAL(inserito()), this, SLOT(addItem()));
+    connect(insert, SIGNAL(noInsert()), this, SLOT(showMain()));
     connect(addItemAction,SIGNAL(triggered()),this,SLOT(showInsert()));
+
+
+    connect(search->getSearchbar(), SIGNAL(textChanged(const QString&)), this, SLOT(searchTextChanged()));
+    connect(search->getType(), SIGNAL(currentTextChanged(const QString&)), this, SLOT(searchTextChanged()));
 
 }
 
@@ -100,14 +81,46 @@ void MainWindow::addItem() const
     view->selectionModel()->select(proxymodel->index(model->rowCount() - 1, 0), QItemSelectionModel::Select);
     insert->hide();
     view->show();
-    searchbar->show();
+    search->show();
 
 }
 void MainWindow::showInsert(){
     view->hide();
-    searchbar->hide();
+    search->hide();
     insert->show();
 
+}
+
+void MainWindow::showMain(){
+    view->show();
+    search->show();
+    insert->hide();
+}
+
+void MainWindow::save()
+{
+    if(!file.isEmpty())
+    {
+        model->save(file.toStdString());
+    }else{
+        file=QFileDialog::getSaveFileName(this,tr("Salva"), "",tr("XML (*.xml);;All Files (*)"));
+        model->save(file.toStdString());
+    }
+}
+
+void MainWindow::load()
+{
+    file= QFileDialog::getOpenFileName(this,tr("Carica"), "",tr("XML (*.xml);;All Files (*)"));
+    if(!file.isEmpty()){
+        setWindowTitle(QFileInfo(file).fileName() + tr("/ MuseoManager"));
+        model->load(file.toStdString());
+    }
+}
+
+void MainWindow::searchTextChanged()
+{
+    QRegExp expr(search->getSearchbar()->text(), Qt::CaseInsensitive, QRegExp::Wildcard);
+    proxymodel->setFilterRegExp(expr);
 }
 void MainWindow::closeRequest()
 {
@@ -128,7 +141,4 @@ void MainWindow::closeRequest()
     }
 }
 
-void MainWindow::clearSearchBar()
-{
-    searchbar->setText("");
-}
+

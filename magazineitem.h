@@ -14,9 +14,12 @@ public:
     MagazineItem(const MagazineItem&);
     //metodi get
     string getPrimaPagina()const;
-    string getTipo()const override;
     string getCategoriaM()const;
     static categoriaM getEnumM(const string&);
+    //metodi set
+    void setPrimaPagina(const string&);
+
+    string getTipo()const override;
     //operatori
     bool operator==(const MagazineItem&);
     bool operator!=(const MagazineItem&);

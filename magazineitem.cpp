@@ -24,6 +24,7 @@ std::string MagazineItem::getCategoriaM() const
         case Quotidiano: return "quotidiano";
         case Rivista: return "rivista";
         case Almanacco: return "almanacco";
+    default: return "";
     }
 }
 
@@ -40,6 +41,11 @@ categoriaM MagazineItem::getEnumM(const std::string & s)
     }else{
         return categoriaM::Almanacco;
     }
+}
+
+void MagazineItem::setPrimaPagina(const std::string & s)
+{
+    primaPagina=s;
 }
 
 bool MagazineItem::operator==(const MagazineItem & m)

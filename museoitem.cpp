@@ -26,6 +26,16 @@ void MuseoItem::setAutore(const std::string &s)
     autore=s;
 }
 
+void MuseoItem::setDescrizione(const std::string &s)
+{
+    descrizione=s;
+}
+
+void MuseoItem::setData(const QDate &q)
+{
+    dataScoperta=q;
+}
+
 string MuseoItem::getDescrizione() const
 {
     return descrizione;

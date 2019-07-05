@@ -85,6 +85,7 @@ private:
 
     QPushButton* inserisci;
     QPushButton* reset;
+    QPushButton* annulla;
 
 
 public:
@@ -117,6 +118,7 @@ public:
     string getPrimaPagina() const;
 signals:
     void inserito();
+    void noInsert();
 public slots:
     void setView(QString);
     void addCopertina();
