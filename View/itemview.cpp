@@ -7,7 +7,7 @@
 #include <QHBoxLayout>
 
 
-ItemView::ItemView(MuseoItem *mItem, const QModelIndex & i, const QModelIndex & f, QWidget *parent) : m(mItem),indexBegin(i),indexEnd(f),QWidget(parent)
+ItemView::ItemView(MuseoItem *mItem, const QModelIndex & i, const QModelIndex & f, QWidget *parent) : QWidget(parent), m(mItem),indexBegin(i),indexEnd(f)
 {
     //move(QApplication::desktop()->screen()->rect().center() - rect().center());
     //setFixedSize();
@@ -52,17 +52,17 @@ ItemView::ItemView(MuseoItem *mItem, const QModelIndex & i, const QModelIndex & 
         catSLabel=new QLabel("Categoria statua:",this);
         materialeLabel=new QLabel("Materiale dell'opera:",this);
         soggettoSLabel=new QLabel("Soggetto della statua:",this);
-        fotoSLabel=new QLabel("Foto dell'opera:",this);
+        fotoSLabel=new QLabel("Foto della statua:",this);
 
-        fotoSLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS())));
-        fotoSLabel->pixmap()->scaled(fotoSLabel->size(), Qt::KeepAspectRatio);
-        fotoSLabel->setScaledContents(true);
+        if(static_cast<StatueItem*>(m)->getFotoS()!=""){
+            fotoSLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS())));
+            fotoSLabel->pixmap()->scaled(fotoSLabel->size(), Qt::KeepAspectRatio);
+            fotoSLabel->setScaledContents(true);
+        }
 
         fotoSPath=new QLabel(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS()),this);
-        fotoSButton=new QPushButton("Modifica immagine",this);
-
-
-
+        fotoSPath->hide();
+        fotoSButton=new QPushButton("Modifica immagine:",this);
         catSBox=new QLabel(QString::fromStdString(static_cast<StatueItem*>(m)->getCategoriaS()),this);
         materiale=new QLineEdit(QString::fromStdString(static_cast<StatueItem*>(m)->getMateriale()),this);
         soggettoS=new QLineEdit(QString::fromStdString(static_cast<StatueItem*>(m)->getSoggetto()),this);
@@ -71,12 +71,9 @@ ItemView::ItemView(MuseoItem *mItem, const QModelIndex & i, const QModelIndex & 
         QHBoxLayout* soggettoSLayout = new QHBoxLayout();
         QHBoxLayout* fotoSLayout = new QHBoxLayout();
         QHBoxLayout* materialeLayout = new QHBoxLayout();
-        QVBoxLayout* fotoSPathLayout=new QVBoxLayout();
 
         fotoSLayout->addWidget(fotoSLabel);
-        fotoSLayout->addLayout(fotoSPathLayout);
-        fotoSPathLayout->addWidget(fotoSButton);
-        fotoSPathLayout->addWidget(fotoSPath);
+        fotoSLayout->addWidget(fotoSButton);
         catSLayout->addWidget(catSLabel);
         catSLayout->addWidget(catSBox);
         soggettoSLayout->addWidget(soggettoSLabel);
@@ -92,36 +89,36 @@ ItemView::ItemView(MuseoItem *mItem, const QModelIndex & i, const QModelIndex & 
 
     }else if(m->getTipo()=="Pittura"){
         catPLabel=new QLabel("Categoria pittura:",this);
-        soggettoPLabel=new QLabel("Soggetto del dipinto:",this);
-        movimentoLabel=new QLabel("Movimento artistico:",this);
-        fotoPLabel=new QLabel("Foto dell'opera:",this);
+        movimentoLabel=new QLabel("Materiale dell'opera:",this);
+        soggettoPLabel=new QLabel("Soggetto della pittura:",this);
+        fotoPLabel=new QLabel("Foto della pittura:",this);
 
-        fotoPLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS())));
-        fotoPLabel->pixmap()->scaled(fotoPLabel->size(), Qt::KeepAspectRatio);
-        fotoPLabel->setScaledContents(true);
+        if(static_cast<PictureItem*>(m)->getFotoP()!=""){
+            fotoPLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<PictureItem*>(m)->getFotoP())));
+            fotoPLabel->pixmap()->scaled(fotoPLabel->size(), Qt::KeepAspectRatio);
+            fotoPLabel->setScaledContents(true);
+        }
 
+        fotoPPath=new QLabel(QString::fromStdString(static_cast<PictureItem*>(m)->getFotoP()),this);
+        fotoPPath->hide();
+        fotoPButton=new QPushButton("Modifica immagine:",this);
         catPBox=new QLabel(QString::fromStdString(static_cast<PictureItem*>(m)->getCategoriaP()),this);
-        soggettoP=new QLineEdit(QString::fromStdString(static_cast<PictureItem*>(m)->getSoggetto()),this);
         movimento=new QLineEdit(QString::fromStdString(static_cast<PictureItem*>(m)->getMovimento()),this);
-        fotoPPath=new QLabel((QString::fromStdString(static_cast<PictureItem*>(m)->getFotoP()),this));
-        fotoPButton=new QPushButton("Modifica immagine",this);
+        soggettoP=new QLineEdit(QString::fromStdString(static_cast<PictureItem*>(m)->getSoggetto()),this);
 
         QHBoxLayout* catPLayout = new QHBoxLayout();
         QHBoxLayout* soggettoPLayout = new QHBoxLayout();
-        QHBoxLayout* movimentoLayout = new QHBoxLayout();
         QHBoxLayout* fotoPLayout = new QHBoxLayout();
-        QVBoxLayout* fotoPPathLayout=new QVBoxLayout();
+        QHBoxLayout* movimentoLayout = new QHBoxLayout();
 
+        fotoPLayout->addWidget(fotoPLabel);
+        fotoPLayout->addWidget(fotoPButton);
         catPLayout->addWidget(catPLabel);
         catPLayout->addWidget(catPBox);
         soggettoPLayout->addWidget(soggettoPLabel);
         soggettoPLayout->addWidget(soggettoP);
         movimentoLayout->addWidget(movimentoLabel);
         movimentoLayout->addWidget(movimento);
-        fotoPLayout->addWidget(fotoPLabel);
-        fotoPLayout->addLayout(fotoPPathLayout);
-        fotoPPathLayout->addWidget(fotoPButton);
-        fotoPPathLayout->addWidget(fotoPPath);
         attributiLayout->addLayout(catPLayout);
         attributiLayout->addLayout(soggettoPLayout);
         attributiLayout->addLayout(movimentoLayout);
@@ -132,32 +129,31 @@ ItemView::ItemView(MuseoItem *mItem, const QModelIndex & i, const QModelIndex & 
     }else if(m->getTipo()=="Libro"){
         dataLibroLabel=new QLabel("Data pubblicazione del libro:",this);
         prefazioneLabel =new QLabel("Prefazione del libro:",this);
-        copertinaLabel =new QLabel("Foto della copertina",this);
+        copertinaLabel =new QLabel("Foto della copertina:",this);
 
-        copertinaLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS())));
-        copertinaLabel->pixmap()->scaled(copertinaLabel->size(), Qt::KeepAspectRatio);
-        copertinaLabel->setScaledContents(true);
-
+        if(static_cast<BookItem*>(m)->getCopertina()!=""){
+            copertinaLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<BookItem*>(m)->getCopertina())));
+            copertinaLabel->pixmap()->scaled(copertinaLabel->size(), Qt::KeepAspectRatio);
+            copertinaLabel->setScaledContents(true);
+        }
         dataLibro=new QDateEdit(static_cast<BookItem*>(m)->getDataDocumento(),this);
         dataLibro->setDisplayFormat(QString("dd.MM.yyyy"));
         prefazione=new QLineEdit(QString::fromStdString(static_cast<BookItem*>(m)->getPrefazione()),this);
         copertinaButton=new QPushButton("Modifica immagine",this);
         copertinaPath=new QLabel(QString::fromStdString(static_cast<BookItem*>(m)->getCopertina()),this);
+        copertinaPath->hide();
 
 
         QHBoxLayout* dataLibroLayout = new QHBoxLayout();
         QHBoxLayout* prefazioneLayout = new QHBoxLayout();
         QHBoxLayout* copertinaLayout = new QHBoxLayout();
-        QVBoxLayout* copertinaPathLayout=new QVBoxLayout();
 
         dataLibroLayout->addWidget(dataLibroLabel);
         dataLibroLayout->addWidget(dataLibro);
         prefazioneLayout->addWidget(prefazioneLabel);
         prefazioneLayout->addWidget(prefazione);
         copertinaLayout->addWidget(copertinaLabel);
-        copertinaLayout->addLayout(copertinaPathLayout);
-        copertinaPathLayout->addWidget(copertinaButton);
-        copertinaPathLayout->addWidget(copertinaPath);
+        copertinaLayout->addWidget(copertinaButton);
 
         attributiLayout->addLayout(dataLibroLayout);
         attributiLayout->addLayout(prefazioneLayout);
@@ -170,32 +166,32 @@ ItemView::ItemView(MuseoItem *mItem, const QModelIndex & i, const QModelIndex & 
 
         catMLabel=new QLabel("Tipo di periodico:",this);
         dataMagazineLabel=new QLabel("Data uscita del periodico",this);
-        primaPaginaLabel=new QLabel("Prima pagina del periodico:",this);
+        primaPaginaLabel=new QLabel("Foto prima pagina:",this);
 
-        primaPaginaLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS())));
-        primaPaginaLabel->pixmap()->scaled(primaPaginaLabel->size(), Qt::KeepAspectRatio);
-        primaPaginaLabel->setScaledContents(true);
+        if(static_cast<MagazineItem*>(m)->getPrimaPagina()!=""){
+            primaPaginaLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<MagazineItem*>(m)->getPrimaPagina())));
+            primaPaginaLabel->pixmap()->scaled(primaPaginaLabel->size(), Qt::KeepAspectRatio);
+            primaPaginaLabel->setScaledContents(true);
+        }
 
         catMBox=new QLabel(QString::fromStdString(static_cast<MagazineItem*>(m)->getCategoriaM()),this);
         dataMagazine=new QDateEdit(static_cast<MagazineItem*>(m)->getDataDocumento(),this);
         dataMagazine->setDisplayFormat(QString("dd.MM.yyyy"));
         primaPaginaPath=new QLabel(QString::fromStdString(static_cast<MagazineItem*>(m)->getPrimaPagina()),this);
+        primaPaginaPath->hide();
         primaPaginaButton=new QPushButton("Modifica immagine",this);
 
 
         QHBoxLayout* catMLayout = new QHBoxLayout();
         QHBoxLayout* dataMagazineLayout = new QHBoxLayout();
         QHBoxLayout* primaPaginaLayout = new QHBoxLayout();
-        QVBoxLayout* primaPaginaPathLayout=new QVBoxLayout();
 
         catMLayout->addWidget(catMLabel);
         catMLayout->addWidget(catMBox);
         dataMagazineLayout->addWidget(dataMagazineLabel);
         dataMagazineLayout->addWidget(dataMagazine);
         primaPaginaLayout->addWidget(primaPaginaLabel);
-        primaPaginaLayout->addLayout(primaPaginaPathLayout);
-        primaPaginaPathLayout->addWidget(primaPaginaButton);
-        primaPaginaPathLayout->addWidget(primaPaginaPath);
+        primaPaginaLayout->addWidget(primaPaginaButton);
 
         attributiLayout->addLayout(catMLayout);
         attributiLayout->addLayout(dataMagazineLayout);
@@ -240,10 +236,6 @@ ItemView::ItemView(MuseoItem *mItem, const QModelIndex & i, const QModelIndex & 
 
     mainLayout->addLayout(tipoLayout);
     mainLayout->addLayout(attributiLayout);
-
-
-
-
 
 
 

@@ -37,35 +37,6 @@ private:
     QLineEdit* desc;
     QDateEdit* data;
 
-    //bookItem
-
-    QLabel* dataLibroLabel;
-    QDateEdit* dataLibro;
-    QLabel* prefazioneLabel;
-    QLineEdit* prefazione;
-    QLabel* copertinaLabel;
-    QLabel* copertinaPath;
-    QPushButton* copertinaButton;
-
-
-    //letterItem
-
-    QLabel* dataLetteraLabel;
-    QDateEdit* dataLettera;
-    QLabel* destinatarioLabel;
-    QLineEdit* destinatario;
-    QLabel* testoLabel;
-    QLineEdit* testo;
-
-    //magazineItem
-    QLabel* primaPaginaLabel;
-    QLabel* primaPaginaPath;
-    QPushButton* primaPaginaButton;
-    QLabel* dataMagazineLabel;
-    QDateEdit* dataMagazine;
-    QLabel* catMLabel;
-    QLabel* catMBox;
-
 
     //statueItem
     QLabel* catSLabel;
@@ -88,6 +59,34 @@ private:
     QLabel* fotoPLabel;
     QLabel* fotoPPath;
     QPushButton* fotoPButton;
+
+    //bookItem
+    QLabel* dataLibroLabel;
+    QDateEdit* dataLibro;
+    QLabel* prefazioneLabel;
+    QLineEdit* prefazione;
+    QLabel* copertinaLabel;
+    QLabel* copertinaPath;
+    QPushButton* copertinaButton;
+
+
+    //magazineItem
+    QLabel* primaPaginaLabel;
+    QLabel* primaPaginaPath;
+    QPushButton* primaPaginaButton;
+    QLabel* dataMagazineLabel;
+    QDateEdit* dataMagazine;
+    QLabel* catMLabel;
+    QLabel* catMBox;
+
+    //letterItem
+    QLabel* dataLetteraLabel;
+    QDateEdit* dataLettera;
+    QLabel* destinatarioLabel;
+    QLineEdit* destinatario;
+    QLabel* testoLabel;
+    QLineEdit* testo;
+
 
     QPushButton* modifica;
     QPushButton* chiudi;

@@ -19,6 +19,7 @@ std::string StatueItem::getCategoriaS() const
         case Altorilievo: return "altorilievo";
         case Sculturaequestre: return "sculturaequestre";
     }
+    throw std::exception();
 }
 
 

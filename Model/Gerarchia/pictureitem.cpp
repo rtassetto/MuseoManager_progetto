@@ -15,6 +15,7 @@ std::string PictureItem::getCategoriaP() const
         case Naturamorta: return "naturamorta";
         case Fotografia: return "fotografia";
     }
+    throw std::exception();
 }
 
 std::string PictureItem::getSoggetto() const

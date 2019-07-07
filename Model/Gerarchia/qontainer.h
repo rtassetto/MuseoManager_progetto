@@ -2,8 +2,6 @@
 #define QONTAINER_H
 #include <iostream>
 
-//definizione contenitori, puntatore smart e relativi metodi
-
 template <class T>
 class Qontainer{
 private:
@@ -283,9 +281,8 @@ Qontainer<T>::Qontainer( const T& t,unsigned int s):
         punt[i]=t;
 }
 template<typename T>
-Qontainer<T>::Qontainer(const Qontainer<T>& a)//costruttore di copia
-    : size(a.size),
-      capacity(a.capacity),punt(new T[a.capacity]){
+Qontainer<T>::Qontainer(const Qontainer<T>& a) : size(a.size), capacity(a.capacity),punt(new T[a.capacity])
+{
     for(unsigned int i=0; i<size; i++)
         punt[i]=a.punt[i];
 }
@@ -304,7 +301,6 @@ Qontainer<T>& Qontainer<T>::operator=(const Qontainer<T>& t){
         for(unsigned int i=0; i<size; i++)
             punt[i]=t.punt[i];
     }
-
     return *this;
 }
 
@@ -367,19 +363,20 @@ void Qontainer<T>::resize(){
     punt=newPunt;
 }
 template<typename T>
-void Qontainer<T>::push_back(const T& t){ //aggiungo in coda
+void Qontainer<T>::push_back(const T& t){
     if (!(size<capacity))resize();
-    punt[size++]=t;
+    punt[size]=t;
+    size++;
 }
 
 template<class T>
-void Qontainer<T>::pop_back() //tolgo in coda
+void Qontainer<T>::pop_back()
 {
     if(size) size--;
 }
 template <typename T>
 void Qontainer<T>::erase(unsigned int index){
-    if(index>size-1) throw std::out_of_range("Indice fuori dai limiti");
+    if(index>size-1) throw std::out_of_range("Index out of bound");
     for(unsigned int i=index; i<size-1; i++){
         punt[i]=punt[i+1];
     }
@@ -388,7 +385,7 @@ void Qontainer<T>::erase(unsigned int index){
 
 template <typename T>
 void Qontainer<T>::erase(unsigned int start, unsigned int end){
-    if(start<0 || end<0||start >size-1 || end>size-1 || start> end ) throw std::out_of_range("Indici fuori dai limiti");
+    if(start<0 || end<0||start >size-1 || end>size-1 || start> end ) throw std::out_of_range("Index out of bound");
 
     for(unsigned int i=start, j=1; i<size; i++, j++){
         punt[i]=punt[end+j];
@@ -408,6 +405,8 @@ template <typename T>
 T& Qontainer<T>::position(unsigned int index){
     if(!(index<0 || index > size-1)){
             return punt[index];
+    }else{
+        throw std::out_of_range("Index out of bound");
     }
 }
 
@@ -421,8 +420,17 @@ typename Qontainer<T>::iteratore Qontainer<T>::end()const{
     return iteratore(punt+(size));
 }
 
+template<typename T>
+typename Qontainer<T>::iteratore_const Qontainer<T>::c_begin() const
+{
+    return iteratore_const(punt);
+}
+
+template<typename T>
+typename Qontainer<T>::iteratore_const Qontainer<T>::c_end() const
+{
+    return iteratore_const(punt+(size));
+}
+
 
 #endif // QONTAINER_H
-
-
-

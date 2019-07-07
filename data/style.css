@@ -4,3 +4,6 @@ QLineEdit{
     margin: 1px 2px;
 
 }
+QMenuBar{
+    background-color:#BCD2FE;
+}

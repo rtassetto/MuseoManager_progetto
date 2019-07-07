@@ -12,6 +12,7 @@
 #include <Model/qproxymodel.h>
 #include <View/searchview.h>
 
+
 class MainWindow : public QWidget
 {
     Q_OBJECT

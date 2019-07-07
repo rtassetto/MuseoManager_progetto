@@ -27,7 +27,7 @@ QVariant QTableModel::data(const QModelIndex & index, int n) const
         return QVariant();
     switch(n){
     case Qt::BackgroundColorRole:
-        return QVariant(QBrush(QColor(Qt::blue)));
+        return QVariant(QBrush(QColor(Qt::gray)));
     case Qt::TextAlignmentRole:
         return QVariant ( Qt::AlignVCenter | Qt::AlignHCenter );
     case Qt::SizeHintRole:
@@ -106,10 +106,7 @@ QVariant QTableModel::headerData(int section, Qt::Orientation orientation, int n
 {
     if (n != Qt::DisplayRole)
         return QVariant();
-    if(n==Qt::FontRole)
-    {
-        return QFont("Times", 20, QFont::Bold);
-    }
+
     if (orientation == Qt::Horizontal) {
         switch (section) {
         case 1:
@@ -140,7 +137,7 @@ bool QTableModel::insertRows(int begin, int count, const QModelIndex &parent)
         model->push_end(new LetterItem(insert->getNome(),insert->getAutore(),insert->getDescrizione(),insert->getData(),insert->getDataLettera(),insert->getDestinatario(),insert->getTesto()));
     } else if (tipo=="Magazine"){
        model->push_end(new MagazineItem(insert->getNome(),insert->getAutore(),insert->getDescrizione(),insert->getData(),insert->getDataMagazine(),insert->getPrimaPagina(),model->getEnumM(insert->getCatM())));
-    } else if (tipo=="Scultura"){
+    } else if (tipo=="Statua"){
         model->push_end(new StatueItem(insert->getNome(),insert->getAutore(),insert->getDescrizione(),insert->getData(),model->getEnumS(insert->getCatS()),insert->getSoggettoS(),insert->getMateriale(),insert->getFotoS()));
     }else if (tipo=="Pittura"){
         model->push_end(new PictureItem(insert->getNome(),insert->getAutore(),insert->getDescrizione(),insert->getData(),model->getEnumP(insert->getCatP()),insert->getSoggettoP(),insert->getMovimento(),insert->getFotoP()));

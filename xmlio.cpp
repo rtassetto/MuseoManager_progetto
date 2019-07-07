@@ -14,7 +14,7 @@ Qontainer<MuseoItem *> XmlIO::read() const
     Qontainer<MuseoItem *> q;
         QFile file(QString::fromStdString(filename));
         if(!file.open(QIODevice::ReadOnly)) {
-            QMessageBox box(QMessageBox::Warning, "Errore di apertura", "Non è stato possibile aprire il file", QMessageBox::Ok);
+            QMessageBox box(QMessageBox::Warning, "Errore di apertura", "Non e' possibile aprire il file", QMessageBox::Ok);
             return q;
         }
         QXmlStreamReader reader(&file); // QIODevice*
@@ -91,8 +91,8 @@ void XmlIO::write(const Qontainer<MuseoItem *> & q) const
     writer.setAutoFormatting(true); // Per leggibilità del file XML
     writer.writeStartDocument();    // Scrive le intestazioni XML
     writer.writeStartElement("root");
-    auto cit = q.begin();
-    while(cit!= q.end()) {
+    auto cit = q.c_begin();
+    while(cit!= q.c_end()) {
         const MuseoItem* it=*cit;
         const QString tipo=QString::fromStdString(it->getTipo());
         writer.writeEmptyElement(tipo);

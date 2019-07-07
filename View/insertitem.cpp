@@ -94,7 +94,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
     catSBox->addItem("Busto");
     catSBox->addItem("Bassorilievo");
     catSBox->addItem("Altorilievo");
-    catSBox->addItem("Scultura equestre");
+    catSBox->addItem("Statua equestre");
 
     catPBox->addItem("Ritratto");
     catPBox->addItem("Paesaggio");
@@ -106,7 +106,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
     museumType->setFocus();
-    museumType->addItem(QIcon(":/data/images/statueicon.png"),"Scultura");
+    museumType->addItem(QIcon(":/data/images/statueicon.png"),"Statua");
     museumType->addItem(QIcon(":/data/images/painticon.png"),"Pittura");
     museumType->addItem(QIcon(":/data/images/book.png"),"Libro");
     museumType->addItem(QIcon(":/data/images/magazine.png"),"Magazine");
@@ -302,11 +302,10 @@ void InsertItem::clearField(){
     nome->setText("");
     autore->setText("");
     desc->setText("");
-    //data->setDate(QDate(0,1,1));
     fotoSLabel->clear();
-    fotoSLabel->setText("Foto dell'opera");
+    fotoSLabel->setText("Foto della statua");
     fotoPLabel->clear();
-    fotoPLabel->setText("Foto dell'opera");
+    fotoPLabel->setText("Foto della pittura");
     fotoSPath->clear();
     fotoPPath->clear();
     catSBox->setCurrentIndex(0);
@@ -315,6 +314,14 @@ void InsertItem::clearField(){
     catPBox->setCurrentIndex(0);
     soggettoP->setText("");
     movimento->setText("");
+    prefazione->setText("");
+    copertinaLabel->setText("Foto della copertina");
+    copertinaPath->clear();
+    catMBox->setCurrentIndex(0);
+    primaPaginaLabel->setText("Foto della prima pagina:");
+    primaPaginaPath->clear();
+    destinatario->setText("");
+    testo->setText("");
 }
 
 
@@ -448,17 +455,17 @@ std::string InsertItem::getFotoS() const
 
 std::string InsertItem::getFotoP() const
 {
-    return fotoPLabel->text().toStdString();
+    return fotoPPath->text().toStdString();
 }
 
 std::string InsertItem::getPrimaPagina() const
 {
-    return primaPaginaLabel->text().toStdString();
+    return primaPaginaPath->text().toStdString();
 }
 
 void InsertItem::setView(QString s)
 {
-    //Scultura
+    //Statua
     catSLabel->setVisible(false);
     catSBox->setVisible(false);
     soggettoSLabel->setVisible(false);
@@ -509,7 +516,6 @@ void InsertItem::setView(QString s)
         prefazione->setVisible(true);
         copertinaLabel->setVisible(true);
         copertinaButton->setVisible(true);
-        //copertinaPath->setVisible(true);
     }else if(s=="Magazine"){
         catMLabel->setVisible(true);
         catMBox->setVisible(true);
@@ -517,7 +523,6 @@ void InsertItem::setView(QString s)
         dataMagazine->setVisible(true);
         primaPaginaLabel->setVisible(true);
         primaPaginaButton->setVisible(true);
-        //primaPaginaPath->setVisible(true);
     }else if(s=="Lettera"){
         dataLetteraLabel->setVisible(true);
         dataLettera->setVisible(true);
@@ -525,7 +530,7 @@ void InsertItem::setView(QString s)
         destinatario->setVisible(true);
         testoLabel->setVisible(true);
         testo->setVisible(true);
-    }else if(s=="Scultura"){
+    }else if(s=="Statua"){
         catSLabel->setVisible(true);
         catSBox->setVisible(true);
         soggettoSLabel->setVisible(true);
@@ -533,7 +538,6 @@ void InsertItem::setView(QString s)
         materialeLabel->setVisible(true);
         materiale->setVisible(true);
         fotoSLabel->setVisible(true);
-        //fotoSPath->setVisible(true);
         fotoSButton->setVisible(true);
     }else if(s=="Pittura"){
         catPLabel->setVisible(true);
@@ -544,7 +548,6 @@ void InsertItem::setView(QString s)
         movimento->setVisible(true);
         fotoPButton->setVisible(true);
         fotoPLabel->setVisible(true);
-        //fotoPPath->setVisible(true);
     }
 }
 

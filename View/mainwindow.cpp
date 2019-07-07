@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent, bool toLoad)
     // Setup del menù
     menuBar->addMenu(menuFile);
     menuBar->addMenu(menuAdd);
+    menuBar->setFixedHeight(25);
     menuAdd->addAction(addItemAction);
     menuFile->addAction(saveAction);
     menuFile->addAction(exitAction);
