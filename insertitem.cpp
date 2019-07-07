@@ -242,17 +242,7 @@ InsertItem::InsertItem(QWidget *parent): QWidget(parent)/*,autoreLabel(new QLabe
 
     mainLayout->addLayout(tipoLayout);
     mainLayout->addLayout(attributiLayout);
-    //group->setLayout(mainLayout);
-    /*mainLayout->addLayout(autoreLayout);
-    mainLayout->addLayout(descLayout);
-    mainLayout->addLayout(dataLayout);
-    mainLayout->addLayout(catSLayout);
-    mainLayout->addLayout(catPLayout);
-    mainLayout->addLayout(testoLayout);
-    mainLayout->addLayout(soggettoSLayout);
-    mainLayout->addLayout(soggettoPLayout);
-    mainLayout->addLayout(movimentoLayout);
-    mainLayout->addLayout(materialeLayout);*/
+
 
     fotoSPath->setVisible(false);
     //Magazine
@@ -331,7 +321,6 @@ void InsertItem::clearField(){
 
 void InsertItem::addCopertina(){
     QString file = QFileDialog::getOpenFileName(this,tr("Inserisci immagine"),"../MuseoManager/data/images", tr("Image Files (*.png *.jpg *.bmp)"));
-
     copertinaLabel->setPixmap(QPixmap(file));
     copertinaLabel->pixmap()->scaled(copertinaLabel->size(), Qt::KeepAspectRatio);
     copertinaLabel->setScaledContents(true);

@@ -38,17 +38,6 @@ public:
     void erase(MuseoItem*);
     MuseoItem* position(unsigned int);
 
-
-
-//metodi container di risultati della ricerca
-
-    /*void filterByName(string )const ;
-    void filterBySex(string )const;
-    void filterByPriceMin(double )const;
-    void filterByPriceMag(double )const;
-    void filterBySeason(string )const;
-    void filterByType(string )const;*/
-
 };
 
 #endif // MODELLO_H

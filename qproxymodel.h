@@ -10,6 +10,7 @@ private:
 public:
     QProxyModel(QObject* =nullptr, QComboBox * =nullptr);
     void removeDisplayed();
+    void showView(const QModelIndex&) const;
     bool insertRows(int, int =1, const QModelIndex& = QModelIndex()) override;
     bool filterAcceptsRow(int, const QModelIndex&) const override;
 };

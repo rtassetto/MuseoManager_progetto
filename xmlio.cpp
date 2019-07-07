@@ -17,58 +17,66 @@ Qontainer<MuseoItem *> XmlIO::read() const
             return q;
         }
         QXmlStreamReader reader(&file); // QIODevice*
-        if(reader.readNextStartElement() && reader.name() == "root"){
-            while(reader.readNextStartElement()) {
+        if(reader.readNextStartElement()){
+            if(reader.name() == "root"){
+                while(reader.readNextStartElement()) {
 
-                const QXmlStreamAttributes attributo= reader.attributes();
-                string nome= attributo.value("nome").toString().toStdString();
-                string autore= attributo.value("autore").toString().toStdString();
-                string descrizione= attributo.value("descrizione").toString().toStdString();
-                QString data= attributo.value("dataScoperta").toString();
-                MuseoItem* add=nullptr;
-                if(reader.name()=="Libro")
-                {
-                    QString dataDocumento=attributo.value("dataDocumento").toString();
-                    string prefazione= attributo.value("prefazione").toString().toStdString();
-                    string copertina= attributo.value("copertina").toString().toStdString();
+                    const QXmlStreamAttributes attributo= reader.attributes();
+                    string nome= attributo.value("nome").toString().toStdString();
+                    string autore= attributo.value("autore").toString().toStdString();
+                    string descrizione= attributo.value("descrizione").toString().toStdString();
+                    QString data= attributo.value("dataScoperta").toString();
+                    MuseoItem* add=nullptr;
+                    if(reader.name()=="Libro")
+                    {
+                        QString dataDocumento=attributo.value("dataDocumento").toString();
+                        string prefazione= attributo.value("prefazione").toString().toStdString();
+                        string copertina= attributo.value("copertina").toString().toStdString();
 
 
-                    add=new BookItem(nome,autore,descrizione,QDate::fromString(data,"dd.MM.yyyy"),QDate::fromString(dataDocumento,"dd.MM.yyyy"),prefazione,copertina);
-                }else if(reader.name()=="Magazine")
-                {
-                    QString dataDocumento=attributo.value("dataDocumento").toString();
-                    string primaPagina= attributo.value("primaPagina").toString().toStdString();
-                    string categoria= attributo.value("categoria").toString().toStdString();
+                        add=new BookItem(nome,autore,descrizione,QDate::fromString(data,"dd.MM.yyyy"),QDate::fromString(dataDocumento,"dd.MM.yyyy"),prefazione,copertina);
+                    }else if(reader.name()=="Magazine")
+                    {
+                        QString dataDocumento=attributo.value("dataDocumento").toString();
+                        string primaPagina= attributo.value("primaPagina").toString().toStdString();
+                        string categoria= attributo.value("categoria").toString().toStdString();
 
-                    add=new MagazineItem(nome,autore,descrizione,QDate::fromString(data,"dd.MM.yyyy"),QDate::fromString(dataDocumento,"dd.MM.yyyy"),primaPagina,MagazineItem::getEnumM(categoria));
-                }else if(reader.name()=="Lettera")
-                {
-                    QString dataDocumento=attributo.value("dataDocumento").toString();
-                    string destinatario= attributo.value("destinatario").toString().toStdString();
-                    string testo= attributo.value("testo").toString().toStdString();
+                        add=new MagazineItem(nome,autore,descrizione,QDate::fromString(data,"dd.MM.yyyy"),QDate::fromString(dataDocumento,"dd.MM.yyyy"),primaPagina,MagazineItem::getEnumM(categoria));
+                    }else if(reader.name()=="Lettera")
+                    {
+                        QString dataDocumento=attributo.value("dataDocumento").toString();
+                        string destinatario= attributo.value("destinatario").toString().toStdString();
+                        string testo= attributo.value("testo").toString().toStdString();
 
-                    add=new LetterItem(nome,autore,descrizione,QDate::fromString(data,"dd.MM.yyyy"),QDate::fromString(dataDocumento,"dd.MM.yyyy"),destinatario,testo);
-                }else if(reader.name()=="Pittura")
-                {
-                    string categoria= attributo.value("categoria").toString().toStdString();
-                    string soggetto= attributo.value("soggetto").toString().toStdString();
-                    string movimento= attributo.value("movimento").toString().toStdString();
-                    string foto= attributo.value("foto").toString().toStdString();
+                        add=new LetterItem(nome,autore,descrizione,QDate::fromString(data,"dd.MM.yyyy"),QDate::fromString(dataDocumento,"dd.MM.yyyy"),destinatario,testo);
+                    }else if(reader.name()=="Pittura")
+                    {
+                        string categoria= attributo.value("categoria").toString().toStdString();
+                        string soggetto= attributo.value("soggetto").toString().toStdString();
+                        string movimento= attributo.value("movimento").toString().toStdString();
+                        string foto= attributo.value("foto").toString().toStdString();
 
-                    add=new PictureItem(nome,autore,descrizione,QDate::fromString(data,"dd.MM.yyyy"),PictureItem::getEnumP(categoria),soggetto,movimento,foto);
+                        add=new PictureItem(nome,autore,descrizione,QDate::fromString(data,"dd.MM.yyyy"),PictureItem::getEnumP(categoria),soggetto,movimento,foto);
 
-                }else{
-                    string categoria= attributo.value("categoria").toString().toStdString();
-                    string soggetto= attributo.value("soggetto").toString().toStdString();
-                    string materiale= attributo.value("materiale").toString().toStdString();
-                    string foto= attributo.value("foto").toString().toStdString();
+                    }else{
+                        string categoria= attributo.value("categoria").toString().toStdString();
+                        string soggetto= attributo.value("soggetto").toString().toStdString();
+                        string materiale= attributo.value("materiale").toString().toStdString();
+                        string foto= attributo.value("foto").toString().toStdString();
 
-                    add=new StatueItem(nome,autore,descrizione,QDate::fromString(data,"dd.MM.yyyy"),StatueItem::getEnumS(categoria),soggetto,materiale,foto);
+                        add=new StatueItem(nome,autore,descrizione,QDate::fromString(data,"dd.MM.yyyy"),StatueItem::getEnumS(categoria),soggetto,materiale,foto);
+                    }
+                    if(add!=nullptr){
+                        q.push_back(add);
+                    }
+                    else throw std::exception();
+
+                    if(!reader.isEndDocument())
+                        reader.skipCurrentElement();
                 }
-                q.push_back(add);
             }
         }
-        file.close();
+    file.close();
     return q;
 }
 

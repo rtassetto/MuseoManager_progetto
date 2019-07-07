@@ -159,3 +159,17 @@ bool QTableModel::searchMatch(unsigned int r, const QRegExp& s, const QString& a
     else
         return false;
 }
+
+bool QTableModel::getSaved() const
+{
+    return model->getSaved();
+}
+
+void QTableModel::showView(const QModelIndex & i) const {
+    if (i.isValid() && (i.row()) < rowCount() && i.column()<columnCount()){
+        ItemView* item = new ItemView(model->position(static_cast<unsigned int>(i.row())), QAbstractTableModel::createIndex(i.row(), 0), QAbstractTableModel::createIndex(i.row(), columnCount()-1));
+        connect(item, SIGNAL(dataChanged(QModelIndex, QModelIndex)), this, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&)));
+        item->setAttribute(Qt::WA_DeleteOnClose); //item viene distrutto alla sua chiusura
+        item->show();
+    }
+}

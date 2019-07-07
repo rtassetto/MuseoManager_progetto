@@ -38,7 +38,9 @@ SearchView::SearchView(QWidget *parent) : QWidget(parent),searchbar(new QLineEdi
     mainLayout->addLayout(buttonsLayout);
 
     connect(clear,SIGNAL(clicked(bool)),this,SLOT(clearSearch()));
-
+    connect(showButton,SIGNAL(clicked(bool)),this,SIGNAL(showItem()));
+    connect(removeButton,SIGNAL(clicked(bool)),this,SIGNAL(deleteItem()));
+    connect(removeAllButton,SIGNAL(clicked(bool)),this,SIGNAL(deleteAll()));
 
 }
 

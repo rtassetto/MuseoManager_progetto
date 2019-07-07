@@ -3,6 +3,7 @@
 #include <QAbstractTableModel>
 #include <modello.h>
 #include<insertitem.h>
+#include <itemview.h>
 
 class QTableModel : public QAbstractTableModel
 {
@@ -22,7 +23,9 @@ public:
     Qt::ItemFlags flags(const QModelIndex&) const override;
     void save(const std::string&) const;
     void load(const std::string &) const;
+    void showView(const QModelIndex&) const;
     bool searchMatch(unsigned int , const QRegExp& , const QString& ) const;
+    bool getSaved() const;
 };
 
 #endif // QTABLEMODEL_H

@@ -20,7 +20,9 @@ public:
     QLineEdit* getSearchbar()const;
 
 signals:
-
+    void showItem();
+    void deleteItem();
+    void deleteAll();
 public slots:
     void clearSearch();
 };

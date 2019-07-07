@@ -15,10 +15,12 @@ MainWindow::MainWindow(QWidget *parent, bool toLoad)
     : QWidget(parent),search(new SearchView(this)),insert(new InsertItem(this)),
       view(new TableView(this))
 {
+
     insert->hide();
     move(QApplication::desktop()->screen()->rect().center() - rect().center());
     setFixedSize(QSize(550,600));
     setWindowIcon(QIcon(":/data/images/icon.png"));
+    setWindowTitle(QString("MuseoManager"));
 
 
 
@@ -34,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent, bool toLoad)
     QMenu* menuFile = new QMenu("File", menuBar);
     QMenu* menuAdd = new QMenu("Aggiungi", menuBar);
     QAction* addItemAction = new QAction("Inserisci nuovo", menuAdd);
-    QAction* loadAction=new QAction("Carica", menuFile);
     QAction* saveAction = new QAction("Salva", menuFile);
     QAction* exitAction = new QAction("Esci", menuFile);
 
@@ -42,7 +43,6 @@ MainWindow::MainWindow(QWidget *parent, bool toLoad)
     menuBar->addMenu(menuFile);
     menuBar->addMenu(menuAdd);
     menuAdd->addAction(addItemAction);
-    menuFile->addAction(loadAction);
     menuFile->addAction(saveAction);
     menuFile->addAction(exitAction);
 
@@ -57,12 +57,16 @@ MainWindow::MainWindow(QWidget *parent, bool toLoad)
     mainLayout->addWidget(insert);
 
 
-    connect(loadAction,SIGNAL(triggered(bool)),this,SLOT(load()));
     connect(saveAction,SIGNAL(triggered(bool)),this,SLOT(save()));
     connect(exitAction,SIGNAL(triggered(bool)),this,SLOT(closeRequest()));
     connect(insert, SIGNAL(inserito()), this, SLOT(addItem()));
     connect(insert, SIGNAL(noInsert()), this, SLOT(showMain()));
     connect(addItemAction,SIGNAL(triggered()),this,SLOT(showInsert()));
+
+    connect(search,SIGNAL(showItem()),this,SLOT(showView()));
+    connect(search,SIGNAL(deleteItem()),this,SLOT(deleteData()));
+    connect(search,SIGNAL(deleteAll()),this,SLOT(deleteAllData()));
+
 
 
     connect(search->getSearchbar(), SIGNAL(textChanged(const QString&)), this, SLOT(searchTextChanged()));
@@ -74,7 +78,6 @@ MainWindow::MainWindow(QWidget *parent, bool toLoad)
 
 void MainWindow::addItem() const
 {
-
     proxymodel->insertRows(proxymodel->rowCount(), 1);
     view->clearSelection();
     view->selectionModel()->clearCurrentIndex();
@@ -97,6 +100,31 @@ void MainWindow::showMain(){
     insert->hide();
 }
 
+void MainWindow::showView()
+{
+    const QModelIndexList item = view->selectionModel()->selectedIndexes();
+    if(item.size() > 0)
+    {
+        proxymodel->showView(item.at(0));
+    }
+}
+
+
+void MainWindow::deleteData()
+{
+    //elimina solo 1 index
+    const QModelIndexList selection = view->selectionModel()->selectedIndexes();
+    if(selection.size() > 0){
+        proxymodel->removeRows(selection.at(0).row(), 1);
+    }
+}
+
+void MainWindow::deleteAllData()
+{
+    proxymodel->removeDisplayed();
+
+}
+
 void MainWindow::save()
 {
     if(!file.isEmpty())
@@ -104,7 +132,15 @@ void MainWindow::save()
         model->save(file.toStdString());
     }else{
         file=QFileDialog::getSaveFileName(this,tr("Salva"), "",tr("XML (*.xml);;All Files (*)"));
-        model->save(file.toStdString());
+        if(!file.isEmpty()){
+            setWindowTitle(QFileInfo(file).fileName() + tr(" - My Beauty"));
+            try {
+                model->save(file.toStdString());
+            } catch (std::exception) {
+                QMessageBox box(QMessageBox::Warning, "Errore di salvataggio", "Non è stato possibile scrivere sul file", QMessageBox::Ok);
+                box.exec();
+            }
+        }
     }
 }
 
@@ -124,20 +160,24 @@ void MainWindow::searchTextChanged()
 }
 void MainWindow::closeRequest()
 {
-    QMessageBox dialog;
-    QPushButton* saveButton=dialog.addButton("Salva",QMessageBox::ActionRole);
-    QPushButton* exitButton=dialog.addButton("Esci senza salvare",QMessageBox::ActionRole);
-    QPushButton* cancelButton=dialog.addButton("Annulla",QMessageBox::ActionRole);
-    dialog.setText("Il documento non e' salvato.");
-    dialog.setInformativeText("Vuoi effettuare un salvataggio?");
-    dialog.setDefaultButton(saveButton);
-    dialog.exec();
-    if(dialog.clickedButton()==saveButton){
+    if(!model->getSaved()){
+        QMessageBox dialog;
+        QPushButton* saveButton=dialog.addButton("Salva",QMessageBox::ActionRole);
+        QPushButton* exitButton=dialog.addButton("Esci senza salvare",QMessageBox::ActionRole);
+        QPushButton* cancelButton=dialog.addButton("Annulla",QMessageBox::ActionRole);
+        dialog.setText("Il documento non e' salvato.");
+        dialog.setInformativeText("Vuoi effettuare un salvataggio?");
+        dialog.setDefaultButton(saveButton);
+        dialog.exec();
+        if(dialog.clickedButton()==saveButton){
+            this->save();
+        }else if(dialog.clickedButton()==exitButton){
+            this->close();
+        }else if(dialog.clickedButton()==cancelButton){
+            dialog.close();
+        }
+    }else{
         this->close();
-    }else if(dialog.clickedButton()==exitButton){
-        this->close();
-    }else if(dialog.clickedButton()==cancelButton){
-        dialog.close();
     }
 }
 

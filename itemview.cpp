@@ -7,99 +7,30 @@
 #include <QHBoxLayout>
 
 
-ItemView::ItemView(QWidget *parent) : QWidget(parent)
+ItemView::ItemView(MuseoItem *mItem, const QModelIndex & i, const QModelIndex & f, QWidget *parent) : m(mItem),indexBegin(i),indexEnd(f),QWidget(parent)
 {
     //move(QApplication::desktop()->screen()->rect().center() - rect().center());
     //setFixedSize();
+    setFixedSize(QSize(400,500));
     tipoLabel=new QLabel("Tipo dell'oggetto:",this);
     nomeLabel=new QLabel("Nome:",this);
     autoreLabel=new QLabel("Autore:",this);
-    descLabel=new QLabel("Descrizione",this);
+    descLabel=new QLabel("Descrizione:",this);
     dataLabel=new QLabel("Data ritrovamento:",this);
-
-
-    //bookitem
-    dataLibroLabel=new QLabel("Data pubblicazione del libro:",this);
-    dataLibro=new QLineEdit(this);
-    prefazione=new QLineEdit(this);
-    prefazioneLabel =new QLabel("Prefazione del libro:",this);
-
-    copertinaLabel =new QLabel("Foto della copertina",this);
-
-
-    //letterItem
-
-    dataLetteraLabel=new QLabel("Data della lettera",this);
-    dataLettera=new QLineEdit(this);
-    destinatarioLabel=new QLabel("Destinatario della lettera",this);
-    destinatario=new QLineEdit(this);
-    testoLabel=new QLabel("Testo della lettera:");
-    testo=new QLineEdit(this);
-
-    //magazineItem
-
-    dataMagazineLabel=new QLabel("Data uscita del periodico",this);
-    dataMagazine=new QLineEdit(this);
-
-    primaPaginaLabel=new QLabel("Prima pagina del periodico:",this);
-
-
-
-    catSLabel=new QLabel("Categoria statua:",this);
-    catPLabel=new QLabel("Categoria pittura:",this);
-    catMLabel=new QLabel("Tipo di periodico:",this);
-
-    materialeLabel=new QLabel("Materiale dell'opera:",this);
-    soggettoSLabel=new QLabel("Soggetto della statua:",this);
-    soggettoPLabel=new QLabel("Soggetto del dipinto:",this);
-    movimentoLabel=new QLabel("Movimento artistico:",this);
-
-
-    museumType=new QLabel(this);
-    nome=new QLineEdit(this);
-    autore=new QLineEdit(this);
-    desc=new QLineEdit(this);
-    data=new QLineEdit(this);
-
-    materiale=new QLineEdit(this);
-    soggettoS=new QLineEdit(this);
-    soggettoP=new QLineEdit(this);
-    movimento=new QLineEdit(this);
-    inserisci=new QPushButton("Inserisci",this);
-
+    museumType=new QLabel(QString::fromStdString(m->getTipo()),this);
+    nome=new QLineEdit(QString::fromStdString(m->getNome()));
+    autore=new QLineEdit(QString::fromStdString(m->getAutore()));
+    desc=new QLineEdit(QString::fromStdString(m->getDescrizione()));
+    data=new QDateEdit((m->getData()));
+    data->setDisplayFormat(QString("dd.MM.yyyy"));
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-
-
-    //mainLayout->setGeometry(QRect(0,0,450,550));
-    QHBoxLayout* tipoLayout=new QHBoxLayout();
     QVBoxLayout* attributiLayout = new QVBoxLayout();
+    QHBoxLayout* tipoLayout=new QHBoxLayout();
     QHBoxLayout* nomeLayout = new QHBoxLayout();
     QHBoxLayout* autoreLayout = new QHBoxLayout();
     QHBoxLayout* descLayout = new QHBoxLayout();
     QHBoxLayout* dataLayout = new QHBoxLayout();
-
-    QHBoxLayout* catMLayout = new QHBoxLayout();
-    QHBoxLayout* catSLayout = new QHBoxLayout();
-    QHBoxLayout* catPLayout = new QHBoxLayout();
-
-    QHBoxLayout* dataLibroLayout = new QHBoxLayout();
-    QHBoxLayout* prefazioneLayout = new QHBoxLayout();
-    QHBoxLayout* copertinaLayout = new QHBoxLayout();
-
-    QHBoxLayout* dataMagazineLayout = new QHBoxLayout();
-    QHBoxLayout* primaPaginaLayout = new QHBoxLayout();
-
-    QHBoxLayout* dataLetteraLayout = new QHBoxLayout();
-    QHBoxLayout* testoLayout = new QHBoxLayout();
-    QHBoxLayout* destinatarioLayout = new QHBoxLayout();
-
-    QHBoxLayout* soggettoSLayout = new QHBoxLayout();
-    QHBoxLayout* soggettoPLayout = new QHBoxLayout();
-    QHBoxLayout* movimentoLayout = new QHBoxLayout();
-    QHBoxLayout* materialeLayout = new QHBoxLayout();
-
-    QHBoxLayout* buttonLayout=new QHBoxLayout();
 
     tipoLayout->addWidget(tipoLabel);
     tipoLayout->addWidget(museumType);
@@ -111,273 +42,282 @@ ItemView::ItemView(QWidget *parent) : QWidget(parent)
     descLayout->addWidget(desc);
     dataLayout->addWidget(dataLabel);
     dataLayout->addWidget(data);
-
-
-    catMLayout->addWidget(catMLabel);
-    dataLibroLayout->addWidget(dataLibroLabel);
-    dataLibroLayout->addWidget(dataLibro);
-    prefazioneLayout->addWidget(prefazioneLabel);
-    prefazioneLayout->addWidget(prefazione);
-    copertinaLayout->addWidget(copertinaLabel);
-    //copertinaLayout->addWidget(copertina);
-    dataMagazineLayout->addWidget(dataMagazineLabel);
-    dataMagazineLayout->addWidget(dataMagazine);
-    primaPaginaLayout->addWidget(primaPaginaLabel);
-    //primaPaginaLayout->addWidget(prefazione);
-    dataLetteraLayout->addWidget(dataLetteraLabel);
-    dataLetteraLayout->addWidget(dataLettera);
-    destinatarioLayout->addWidget(destinatarioLabel);
-    destinatarioLayout->addWidget(destinatario);
-
-
-    catSLayout->addWidget(catSLabel);
-    catPLayout->addWidget(catPLabel);
-    testoLayout->addWidget(testoLabel);
-    testoLayout->addWidget(testo);
-    soggettoSLayout->addWidget(soggettoSLabel);
-    soggettoSLayout->addWidget(soggettoS);
-    soggettoPLayout->addWidget(soggettoPLabel);
-    soggettoPLayout->addWidget(soggettoP);
-    movimentoLayout->addWidget(movimentoLabel);
-    movimentoLayout->addWidget(movimento);
-    materialeLayout->addWidget(materialeLabel);
-    materialeLayout->addWidget(materiale);
-
-    buttonLayout->addWidget(inserisci);
-    //buttonLayout->addWidget(annulla);
-
     attributiLayout->addLayout(nomeLayout);
     attributiLayout->addLayout(autoreLayout);
     attributiLayout->addLayout(descLayout);
     attributiLayout->addLayout(dataLayout);
 
-    attributiLayout->addLayout(catMLayout);
-    attributiLayout->addLayout(dataLibroLayout);
-    attributiLayout->addLayout(prefazioneLayout);
-    attributiLayout->addLayout(copertinaLayout);
-    attributiLayout->addLayout(dataMagazineLayout);
-    attributiLayout->addLayout(primaPaginaLayout);
-    attributiLayout->addLayout(dataLetteraLayout);
-    attributiLayout->addLayout(destinatarioLayout);
+
+    if(m->getTipo()=="Statua"){
+        catSLabel=new QLabel("Categoria statua:",this);
+        materialeLabel=new QLabel("Materiale dell'opera:",this);
+        soggettoSLabel=new QLabel("Soggetto della statua:",this);
+        fotoSLabel=new QLabel("Foto dell'opera:",this);
+
+        fotoSLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS())));
+        fotoSLabel->pixmap()->scaled(fotoSLabel->size(), Qt::KeepAspectRatio);
+        fotoSLabel->setScaledContents(true);
+
+        fotoSPath=new QLabel(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS()),this);
+        fotoSButton=new QPushButton("Modifica immagine",this);
 
 
-    attributiLayout->addLayout(catSLayout);
-    attributiLayout->addLayout(catPLayout);
-    attributiLayout->addLayout(testoLayout);
-    attributiLayout->addLayout(soggettoSLayout);
-    attributiLayout->addLayout(soggettoPLayout);
-    attributiLayout->addLayout(movimentoLayout);
-    attributiLayout->addLayout(materialeLayout);
+
+        catSBox=new QLabel(QString::fromStdString(static_cast<StatueItem*>(m)->getCategoriaS()),this);
+        materiale=new QLineEdit(QString::fromStdString(static_cast<StatueItem*>(m)->getMateriale()),this);
+        soggettoS=new QLineEdit(QString::fromStdString(static_cast<StatueItem*>(m)->getSoggetto()),this);
+
+        QHBoxLayout* catSLayout = new QHBoxLayout();
+        QHBoxLayout* soggettoSLayout = new QHBoxLayout();
+        QHBoxLayout* fotoSLayout = new QHBoxLayout();
+        QHBoxLayout* materialeLayout = new QHBoxLayout();
+        QVBoxLayout* fotoSPathLayout=new QVBoxLayout();
+
+        fotoSLayout->addWidget(fotoSLabel);
+        fotoSLayout->addLayout(fotoSPathLayout);
+        fotoSPathLayout->addWidget(fotoSButton);
+        fotoSPathLayout->addWidget(fotoSPath);
+        catSLayout->addWidget(catSLabel);
+        catSLayout->addWidget(catSBox);
+        soggettoSLayout->addWidget(soggettoSLabel);
+        soggettoSLayout->addWidget(soggettoS);
+        materialeLayout->addWidget(materialeLabel);
+        materialeLayout->addWidget(materiale);
+        attributiLayout->addLayout(catSLayout);
+        attributiLayout->addLayout(soggettoSLayout);
+        attributiLayout->addLayout(materialeLayout);
+        attributiLayout->addLayout(fotoSLayout);
+
+        connect(fotoSButton,SIGNAL(clicked()),this,SLOT(modifyFotoS()));
+
+    }else if(m->getTipo()=="Pittura"){
+        catPLabel=new QLabel("Categoria pittura:",this);
+        soggettoPLabel=new QLabel("Soggetto del dipinto:",this);
+        movimentoLabel=new QLabel("Movimento artistico:",this);
+        fotoPLabel=new QLabel("Foto dell'opera:",this);
+
+        fotoPLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS())));
+        fotoPLabel->pixmap()->scaled(fotoPLabel->size(), Qt::KeepAspectRatio);
+        fotoPLabel->setScaledContents(true);
+
+        catPBox=new QLabel(QString::fromStdString(static_cast<PictureItem*>(m)->getCategoriaP()),this);
+        soggettoP=new QLineEdit(QString::fromStdString(static_cast<PictureItem*>(m)->getSoggetto()),this);
+        movimento=new QLineEdit(QString::fromStdString(static_cast<PictureItem*>(m)->getMovimento()),this);
+        fotoPPath=new QLabel((QString::fromStdString(static_cast<PictureItem*>(m)->getFotoP()),this));
+        fotoPButton=new QPushButton("Modifica immagine",this);
+
+        QHBoxLayout* catPLayout = new QHBoxLayout();
+        QHBoxLayout* soggettoPLayout = new QHBoxLayout();
+        QHBoxLayout* movimentoLayout = new QHBoxLayout();
+        QHBoxLayout* fotoPLayout = new QHBoxLayout();
+        QVBoxLayout* fotoPPathLayout=new QVBoxLayout();
+
+        catPLayout->addWidget(catPLabel);
+        catPLayout->addWidget(catPBox);
+        soggettoPLayout->addWidget(soggettoPLabel);
+        soggettoPLayout->addWidget(soggettoP);
+        movimentoLayout->addWidget(movimentoLabel);
+        movimentoLayout->addWidget(movimento);
+        fotoPLayout->addWidget(fotoPLabel);
+        fotoPLayout->addLayout(fotoPPathLayout);
+        fotoPPathLayout->addWidget(fotoPButton);
+        fotoPPathLayout->addWidget(fotoPPath);
+        attributiLayout->addLayout(catPLayout);
+        attributiLayout->addLayout(soggettoPLayout);
+        attributiLayout->addLayout(movimentoLayout);
+        attributiLayout->addLayout(fotoPLayout);
+
+        connect(fotoPButton,SIGNAL(clicked()),this,SLOT(modifyFotoP()));
+
+    }else if(m->getTipo()=="Libro"){
+        dataLibroLabel=new QLabel("Data pubblicazione del libro:",this);
+        prefazioneLabel =new QLabel("Prefazione del libro:",this);
+        copertinaLabel =new QLabel("Foto della copertina",this);
+
+        copertinaLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS())));
+        copertinaLabel->pixmap()->scaled(copertinaLabel->size(), Qt::KeepAspectRatio);
+        copertinaLabel->setScaledContents(true);
+
+        dataLibro=new QDateEdit(static_cast<BookItem*>(m)->getDataDocumento(),this);
+        dataLibro->setDisplayFormat(QString("dd.MM.yyyy"));
+        prefazione=new QLineEdit(QString::fromStdString(static_cast<BookItem*>(m)->getPrefazione()),this);
+        copertinaButton=new QPushButton("Modifica immagine",this);
+        copertinaPath=new QLabel(QString::fromStdString(static_cast<BookItem*>(m)->getCopertina()),this);
+
+
+        QHBoxLayout* dataLibroLayout = new QHBoxLayout();
+        QHBoxLayout* prefazioneLayout = new QHBoxLayout();
+        QHBoxLayout* copertinaLayout = new QHBoxLayout();
+        QVBoxLayout* copertinaPathLayout=new QVBoxLayout();
+
+        dataLibroLayout->addWidget(dataLibroLabel);
+        dataLibroLayout->addWidget(dataLibro);
+        prefazioneLayout->addWidget(prefazioneLabel);
+        prefazioneLayout->addWidget(prefazione);
+        copertinaLayout->addWidget(copertinaLabel);
+        copertinaLayout->addLayout(copertinaPathLayout);
+        copertinaPathLayout->addWidget(copertinaButton);
+        copertinaPathLayout->addWidget(copertinaPath);
+
+        attributiLayout->addLayout(dataLibroLayout);
+        attributiLayout->addLayout(prefazioneLayout);
+        attributiLayout->addLayout(copertinaLayout);
+
+        connect(copertinaButton,SIGNAL(clicked()),this,SLOT(modifyCopertina()));
+
+
+    }else if(m->getTipo()=="Magazine"){
+
+        catMLabel=new QLabel("Tipo di periodico:",this);
+        dataMagazineLabel=new QLabel("Data uscita del periodico",this);
+        primaPaginaLabel=new QLabel("Prima pagina del periodico:",this);
+
+        primaPaginaLabel->setPixmap(QPixmap(QString::fromStdString(static_cast<StatueItem*>(m)->getFotoS())));
+        primaPaginaLabel->pixmap()->scaled(primaPaginaLabel->size(), Qt::KeepAspectRatio);
+        primaPaginaLabel->setScaledContents(true);
+
+        catMBox=new QLabel(QString::fromStdString(static_cast<MagazineItem*>(m)->getCategoriaM()),this);
+        dataMagazine=new QDateEdit(static_cast<MagazineItem*>(m)->getDataDocumento(),this);
+        dataMagazine->setDisplayFormat(QString("dd.MM.yyyy"));
+        primaPaginaPath=new QLabel(QString::fromStdString(static_cast<MagazineItem*>(m)->getPrimaPagina()),this);
+        primaPaginaButton=new QPushButton("Modifica immagine",this);
+
+
+        QHBoxLayout* catMLayout = new QHBoxLayout();
+        QHBoxLayout* dataMagazineLayout = new QHBoxLayout();
+        QHBoxLayout* primaPaginaLayout = new QHBoxLayout();
+        QVBoxLayout* primaPaginaPathLayout=new QVBoxLayout();
+
+        catMLayout->addWidget(catMLabel);
+        catMLayout->addWidget(catMBox);
+        dataMagazineLayout->addWidget(dataMagazineLabel);
+        dataMagazineLayout->addWidget(dataMagazine);
+        primaPaginaLayout->addWidget(primaPaginaLabel);
+        primaPaginaLayout->addLayout(primaPaginaPathLayout);
+        primaPaginaPathLayout->addWidget(primaPaginaButton);
+        primaPaginaPathLayout->addWidget(primaPaginaPath);
+
+        attributiLayout->addLayout(catMLayout);
+        attributiLayout->addLayout(dataMagazineLayout);
+        attributiLayout->addLayout(primaPaginaLayout);
+
+        connect(primaPaginaButton,SIGNAL(clicked()),this,SLOT(modifyPrimaPagina()));
+
+    }else{//letter item
+
+        dataLetteraLabel=new QLabel("Data della lettera",this);
+        destinatarioLabel=new QLabel("Destinatario della lettera",this);
+        testoLabel=new QLabel("Testo della lettera:");
+
+        dataLettera=new QDateEdit(static_cast<MagazineItem*>(m)->getDataDocumento(),this);
+        dataLettera->setDisplayFormat(QString("dd.MM.yyyy"));
+        destinatario=new QLineEdit(QString::fromStdString(static_cast<LetterItem*>(m)->getDestinatario()),this);
+        testo=new QLineEdit(QString::fromStdString(static_cast<LetterItem*>(m)->getTesto()),this);
+
+        QHBoxLayout* dataLetteraLayout = new QHBoxLayout();
+        QHBoxLayout* testoLayout = new QHBoxLayout();
+        QHBoxLayout* destinatarioLayout = new QHBoxLayout();
+
+        dataLetteraLayout->addWidget(dataLetteraLabel);
+        dataLetteraLayout->addWidget(dataLettera);
+        destinatarioLayout->addWidget(destinatarioLabel);
+        destinatarioLayout->addWidget(destinatario);
+        testoLayout->addWidget(testoLabel);
+        testoLayout->addWidget(testo);
+
+        attributiLayout->addLayout(dataLetteraLayout);
+        attributiLayout->addLayout(destinatarioLayout);
+        attributiLayout->addLayout(testoLayout);
+
+    }
+
+    QHBoxLayout* buttonLayout=new QHBoxLayout();
+    modifica=new QPushButton("Salva modifiche",this);
+    chiudi=new QPushButton("Chiudi",this);
+    buttonLayout->addWidget(modifica);
+    buttonLayout->addWidget(chiudi);
     attributiLayout->addLayout(buttonLayout);
 
     mainLayout->addLayout(tipoLayout);
     mainLayout->addLayout(attributiLayout);
-    /*mainLayout->addLayout(autoreLayout);
-    mainLayout->addLayout(descLayout);
-    mainLayout->addLayout(dataLayout);
-    mainLayout->addLayout(catDLayout);
-    mainLayout->addLayout(catSLayout);
-    mainLayout->addLayout(catPLayout);
-    mainLayout->addLayout(testoLayout);
-    mainLayout->addLayout(soggettoSLayout);
-    mainLayout->addLayout(soggettoPLayout);
-    mainLayout->addLayout(movimentoLayout);
-    mainLayout->addLayout(materialeLayout);*/
 
 
-    //Magazine
-    catMLabel->setVisible(false);
-    catMBox->setVisible(false);
-    dataMagazineLabel->setVisible(false);
-    dataMagazine->setVisible(false);
-    primaPaginaLabel->setVisible(false);
-    //Libro
-    dataLibroLabel->setVisible(false);
-    dataLibro->setVisible(false);
-    prefazioneLabel->setVisible(false);
-    prefazione->setVisible(false);
-    copertinaLabel->setVisible(false);
-    //Lettera
-    dataLetteraLabel->setVisible(false);
-    dataLettera->setVisible(false);
-    destinatarioLabel->setVisible(false);
-    destinatario->setVisible(false);
-    testoLabel->setVisible(false);
-    testo->setVisible(false);
-    //Dipinto
-    catPLabel->setVisible(false);
-    soggettoPLabel->setVisible(false);
-    soggettoP->setVisible(false);
-    movimentoLabel->setVisible(false);
-    movimento->setVisible(false);
 
 
-    connect(inserisci, SIGNAL(clicked()), this, SIGNAL(inserito()));
-    connect(museumType,SIGNAL(currentTextChanged(QString)),this,SLOT(setView(QString)));
+
+
+
+    connect(chiudi,SIGNAL(clicked(bool)),this,SLOT(close()));
+    connect(modifica,SIGNAL(clicked()),this,SLOT(modify()));
 
 }
 
-/*
-std::string ItemView::getNome() const
+void ItemView::modify()
 {
-    return nome->text().toStdString();
-}
+    m->setNome(nome->text().toStdString());
+    m->setAutore(autore->text().toStdString());
+    m->setDescrizione(desc->text().toStdString());
+    m->setData(data->date());
 
-std::string ItemView::getAutore() const
-{
-    return autore->text().toStdString();
-}
-
-std::string ItemView::getData() const
-{
-    return data->text().toStdString();
-}
-
-std::string ItemView::getDescrizione() const
-{
-    return desc->text().toStdString();
-}
-
-std::string ItemView::getDataMagazine() const
-{
-    return dataMagazine->text().toStdString();
-}
-
-std::string ItemView::getDataLibro() const
-{
-    return dataLibro->text().toStdString();
-}
-
-std::string ItemView::getDataLettera() const
-{
-    return dataLettera->text().toStdString();
-}
-
-std::string ItemView::getPrefazione() const
-{
-    return prefazione->text().toStdString();
-}
-
-std::string ItemView::getDestinatario() const
-{
-    return destinatario->text().toStdString();
-}
-
-std::string ItemView::getCatM() const
-{
-    return catMBox->currentText().toStdString();
-}
-
-std::string ItemView::getCatS() const
-{
-    return catSBox->currentText().toStdString();
-}
-
-std::string ItemView::getCatP() const
-{
-    return catPBox->currentText().toStdString();
-}
-
-std::string ItemView::getSoggettoS() const
-{
-    return soggettoS->text().toStdString();
-}
-
-std::string ItemView::getSoggettoP() const
-{
-    return soggettoP->text().toStdString();
-}
-
-std::string ItemView::getMovimento() const
-{
-    return movimento->text().toStdString();
-}
-
-std::string ItemView::getMateriale() const
-{
-    return materiale->text().toStdString();
-}
-
-std::string ItemView::getTesto() const
-{
-    return testo->text().toStdString();
-}
-
-void ItemView::setView(QString s)
-{
-    //Statua
-    catSLabel->setVisible(false);
-    soggettoSLabel->setVisible(false);
-    soggettoS->setVisible(false);
-    materialeLabel->setVisible(false);
-    materiale->setVisible(false);
-    //Magazine
-    catMLabel->setVisible(false);
-    dataMagazineLabel->setVisible(false);
-    dataMagazine->setVisible(false);
-    primaPaginaLabel->setVisible(false);
-    //Libro
-    dataLibroLabel->setVisible(false);
-    dataLibro->setVisible(false);
-    prefazioneLabel->setVisible(false);
-    prefazione->setVisible(false);
-    copertinaLabel->setVisible(false);
-    //Lettera
-    dataLetteraLabel->setVisible(false);
-    dataLettera->setVisible(false);
-    destinatarioLabel->setVisible(false);
-    destinatario->setVisible(false);
-    testoLabel->setVisible(false);
-    testo->setVisible(false);
-    //Dipinto
-    catPLabel->setVisible(false);
-    catPBox->setVisible(false);
-    soggettoPLabel->setVisible(false);
-    soggettoP->setVisible(false);
-    movimentoLabel->setVisible(false);
-    movimento->setVisible(false);
-
-    if(s=="Libro"){
-        dataLibroLabel->setVisible(true);
-        dataLibro->setVisible(true);
-        prefazioneLabel->setVisible(true);
-        prefazione->setVisible(true);
-        copertinaLabel->setVisible(true);
-    }else if(s=="Magazine"){
-        catMLabel->setVisible(true);
-        catMBox->setVisible(true);
-        dataMagazineLabel->setVisible(true);
-        dataMagazine->setVisible(true);
-        primaPaginaLabel->setVisible(true);
-    }else if(s=="Lettera"){
-        dataLetteraLabel->setVisible(true);
-        dataLettera->setVisible(true);
-        destinatarioLabel->setVisible(true);
-        destinatario->setVisible(true);
-        testoLabel->setVisible(true);
-        testo->setVisible(true);
-    }else if(s=="Scultura"){
-        catSLabel->setVisible(true);
-        catSBox->setVisible(true);
-        soggettoSLabel->setVisible(true);
-        soggettoS->setVisible(true);
-        materialeLabel->setVisible(true);
-        materiale->setVisible(true);
-    }else if(s=="Dipinto"){
-        catPLabel->setVisible(true);
-        catPBox->setVisible(true);
-        soggettoPLabel->setVisible(true);
-        soggettoP->setVisible(true);
-        movimentoLabel->setVisible(true);
-        movimento->setVisible(true);
+    if(m->getTipo()=="Statua"){
+        static_cast<StatueItem*>(m)->setMateriale(materiale->text().toStdString());
+        static_cast<StatueItem*>(m)->setSoggetto(soggettoS->text().toStdString());
+        static_cast<StatueItem*>(m)->setFotoS(fotoSPath->text().toStdString());
+    }else if(m->getTipo()=="Pittura"){
+        static_cast<PictureItem*>(m)->setMovimento(movimento->text().toStdString());
+        static_cast<PictureItem*>(m)->setSoggetto(soggettoP->text().toStdString());
+        static_cast<PictureItem*>(m)->setFotoP(fotoPPath->text().toStdString());
+    }else if(m->getTipo()=="Libro"){
+        static_cast<BookItem*>(m)->setDataDocumento(dataLibro->date());
+        static_cast<BookItem*>(m)->setPrefazione(prefazione->text().toStdString());
+        static_cast<BookItem*>(m)->setCopertina(copertinaPath->text().toStdString());
+    }else if(m->getTipo()=="Magazine"){
+        static_cast<MagazineItem*>(m)->setDataDocumento(dataMagazine->date());
+        static_cast<MagazineItem*>(m)->setPrimaPagina(primaPaginaPath->text().toStdString());
+    }else{
+        static_cast<LetterItem*>(m)->setDataDocumento(dataLettera->date());
+        static_cast<LetterItem*>(m)->setDestinatario(destinatario->text().toStdString());
+        static_cast<LetterItem*>(m)->setTesto(testo->text().toStdString());
     }
+    emit(dataChanged(indexBegin,indexEnd));
+}
+
+void ItemView::modifyFotoS()
+{
+    QString file = QFileDialog::getOpenFileName(this,tr("Inserisci immagine"),"../MuseoManager/data/images", tr("Image Files (*.png *.jpg *.bmp)"));
+    fotoSLabel->setPixmap(QPixmap(file));
+    fotoSLabel->pixmap()->scaled(fotoSLabel->size(), Qt::KeepAspectRatio);
+    fotoSLabel->setScaledContents(true);
+    fotoSPath->setText(file);
+}
+
+void ItemView::modifyFotoP()
+{
+    QString file = QFileDialog::getOpenFileName(this,tr("Inserisci immagine"),"../MuseoManager/data/images", tr("Image Files (*.png *.jpg *.bmp)"));
+    fotoPLabel->setPixmap(QPixmap(file));
+    fotoPLabel->pixmap()->scaled(fotoPLabel->size(), Qt::KeepAspectRatio);
+    fotoPLabel->setScaledContents(true);
+    fotoPPath->setText(file);
+}
+
+void ItemView::modifyPrimaPagina()
+{
+    QString file = QFileDialog::getOpenFileName(this,tr("Inserisci immagine"),"../MuseoManager/data/images", tr("Image Files (*.png *.jpg *.bmp)"));
+    primaPaginaLabel->setPixmap(QPixmap(file));
+    primaPaginaLabel->pixmap()->scaled(primaPaginaLabel->size(), Qt::KeepAspectRatio);
+    primaPaginaLabel->setScaledContents(true);
+    primaPaginaPath->setText(file);
+}
+
+void ItemView::modifyCopertina()
+{
+    QString file = QFileDialog::getOpenFileName(this,tr("Inserisci immagine"),"../MuseoManager/data/images", tr("Image Files (*.png *.jpg *.bmp)"));
+    copertinaLabel->setPixmap(QPixmap(file));
+    copertinaLabel->pixmap()->scaled(copertinaLabel->size(), Qt::KeepAspectRatio);
+    copertinaLabel->setScaledContents(true);
+    copertinaPath->setText(file);
+
+}
 
 
-    //move(QApplication::desktop()->screen()->rect().center() - rect().center());
-    //campi item
-    QPushButton* exit= new QPushButton("Chiudi",this);
 
-    connect(exit,SIGNAL(clicked()),this,SLOT(close()));
-    connect(exit,SIGNAL(clicked()),this,SLOT(close()));
-    connect(exit,SIGNAL(clicked()),this,SLOT(close()));
-}*/

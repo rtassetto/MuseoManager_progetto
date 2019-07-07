@@ -12,13 +12,17 @@ void QProxyModel::removeDisplayed()
     }
 }
 
+void QProxyModel::showView(const QModelIndex & i) const
+{
+    QModelIndex index = mapToSource(i);
+    static_cast<QTableModel*>(sourceModel())->showView(index);
+}
+
 bool QProxyModel::insertRows(int beg, int c, const QModelIndex &parent)
 {
-
     bool result = sourceModel()->insertRows(beg, c, parent);
     invalidateFilter();
     return result;
-
 }
 
 bool QProxyModel::filterAcceptsRow(int row, const QModelIndex &) const

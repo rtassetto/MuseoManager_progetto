@@ -23,9 +23,11 @@ private:
     TableView* view;
     QString file;
 
+
 public:
     MainWindow(QWidget *parent = 0, bool toLoad=true);
     ~MainWindow() override=default;
+    bool isSaved;
 
 private slots:
     void addItem() const;
@@ -33,6 +35,9 @@ private slots:
     void showInsert();
     void searchTextChanged();
     void showMain();
+    void showView();
+    void deleteData();
+    void deleteAllData();
     void save();
     void load();
  signals:
