@@ -1,6 +1,6 @@
 #ifndef BOOKITEM_H
 #define BOOKITEM_H
-#include <documentitem.h>
+#include <Model/Gerarchia/documentitem.h>
 
 class BookItem : public DocumentItem
 {

@@ -7,9 +7,9 @@
 #include <QMenu>
 #include <QAction>
 #include <QLineEdit>
-#include <insertitem.h>
+#include <View/insertitem.h>
 #include <QMessageBox>
-#include <museoitem.h>
+#include <Model/Gerarchia/museoitem.h>
 
 MainWindow::MainWindow(QWidget *parent, bool toLoad)
     : QWidget(parent),search(new SearchView(this)),insert(new InsertItem(this)),

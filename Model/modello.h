@@ -1,7 +1,7 @@
 #ifndef MODELLO_H
 #define MODELLO_H
-#include <qontainer.h>
-#include <museoitem.h>
+#include <Model/Gerarchia/qontainer.h>
+#include <Model/Gerarchia/museoitem.h>
 #include <xmlio.h>
 
 class Modello

@@ -1,6 +1,6 @@
 #ifndef DOCUMENTITEM_H
 #define DOCUMENTITEM_H
-#include <museoitem.h>
+#include <Model/Gerarchia/museoitem.h>
 using std::string;
 
 class DocumentItem : public MuseoItem

@@ -1,32 +1,26 @@
-#ifndef ITEMVIEW_H
-#define ITEMVIEW_H
-#include <QLabel>
-#include <QTextEdit>
-#include <QWidget>
-#include <QMainWindow>
-#include <QLineEdit>
-#include <QLineEdit>
-#include <QPushButton>
-#include <museoitem.h>
-#include <statueitem.h>
-#include <documentitem.h>
-#include <pictureitem.h>
-#include <bookitem.h>
-#include <magazineitem.h>
-#include <letteritem.h>
-#include <QDateEdit>
-#include <QModelIndex>
-#include <QFileDialog>
-#include <QMainWindow>
+#ifndef INSERTITEM_H
+#define INSERTITEM_H
 
-class ItemView : public QWidget
+#include <QMainWindow>
+#include<QLabel>
+#include <QLineEdit>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QPushButton>
+#include <QComboBox>
+#include <QDateEdit>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QFileDialog>
+#include <Model/Gerarchia/museoitem.h>
+
+using std::string;
+
+class InsertItem : public QWidget
 {
     Q_OBJECT
 private:
-    MuseoItem* m;
-    const QModelIndex indexBegin;
-    const QModelIndex indexEnd;
-    QLabel* museumType;
+    QComboBox* museumType;
     QLabel* tipoLabel;
     QLabel* nomeLabel;
     QLabel* autoreLabel;
@@ -64,12 +58,12 @@ private:
     QLabel* dataMagazineLabel;
     QDateEdit* dataMagazine;
     QLabel* catMLabel;
-    QLabel* catMBox;
+    QComboBox* catMBox;
 
 
     //statueItem
     QLabel* catSLabel;
-    QLabel* catSBox;
+    QComboBox* catSBox;
     QLabel* materialeLabel;
     QLabel* soggettoSLabel;
     QLineEdit* materiale;
@@ -80,7 +74,7 @@ private:
 
     //pictureItem
     QLabel* catPLabel;
-    QLabel* catPBox;
+    QComboBox* catPBox;
     QLabel* soggettoPLabel;
     QLabel* movimentoLabel;
     QLineEdit* soggettoP;
@@ -89,21 +83,49 @@ private:
     QLabel* fotoPPath;
     QPushButton* fotoPButton;
 
-    QPushButton* modifica;
-    QPushButton* chiudi;
-    QPushButton* modificaFoto;
+    QPushButton* inserisci;
+    QPushButton* reset;
+    QPushButton* annulla;
+
 
 public:
-    explicit ItemView(MuseoItem*, const QModelIndex& ,const QModelIndex&, QWidget *parent = 0);
+    explicit InsertItem(QWidget *parent = nullptr);
+    string getTipo()const;
+    string getNome() const;
+    string getAutore() const;
+    QDate getData() const;
+    string getDescrizione() const;
 
+    QDate getDataMagazine()const;
+    QDate getDataLibro()const;
+    QDate getDataLettera()const;
+
+    string getPrefazione()const;
+    string getCopertina()const;
+    string getDestinatario()const;
+
+    string getCatM() const;
+    string getCatS() const;
+    string getCatP() const;
+
+    string getSoggettoS() const;
+    string getSoggettoP() const;
+    string getMovimento() const;
+    string getMateriale() const;
+    string getTesto() const;
+    string getFotoS() const;
+    string getFotoP() const;
+    string getPrimaPagina() const;
 signals:
-    void dataChanged(const QModelIndex&, const QModelIndex&);
-private slots:
-    void modify();
-    void modifyFotoS();
-    void modifyFotoP();
-    void modifyPrimaPagina();
-    void modifyCopertina();
+    void inserito();
+    void noInsert();
+public slots:
+    void setView(QString);
+    void addCopertina();
+    void addPrimaPagina();
+    void addFotoP();
+    void addFotoS();
+    void clearField();
 };
 
-#endif // ITEMVIEW_H
+#endif // INSERTITEM_H

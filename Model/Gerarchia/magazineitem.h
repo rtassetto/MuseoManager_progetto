@@ -1,6 +1,6 @@
 #ifndef MAGAZINEITEM_H
 #define MAGAZINEITEM_H
-#include <documentitem.h>
+#include <Model/Gerarchia/documentitem.h>
 
 enum categoriaM{Giornale,Quotidiano, Rivista, Almanacco};
 class MagazineItem : public DocumentItem

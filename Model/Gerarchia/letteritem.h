@@ -1,6 +1,6 @@
 #ifndef LETTERITEM_H
 #define LETTERITEM_H
-#include <documentitem.h>
+#include <Model/Gerarchia/documentitem.h>
 
 class LetterItem : public DocumentItem
 {

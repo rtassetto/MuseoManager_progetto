@@ -1,6 +1,6 @@
 #ifndef STATUEITEM_H
 #define STATUEITEM_H
-#include <museoitem.h>
+#include <Model/Gerarchia/museoitem.h>
 #include <string>
 using std::string;
 

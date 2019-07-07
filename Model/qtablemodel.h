@@ -1,9 +1,9 @@
 #ifndef QTABLEMODEL_H
 #define QTABLEMODEL_H
 #include <QAbstractTableModel>
-#include <modello.h>
-#include<insertitem.h>
-#include <itemview.h>
+#include <Model/modello.h>
+#include <View/insertitem.h>
+#include <View/itemview.h>
 
 class QTableModel : public QAbstractTableModel
 {

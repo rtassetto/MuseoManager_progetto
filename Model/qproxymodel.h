@@ -2,7 +2,7 @@
 #define QPROXYMODEL_H
 #include <QSortFilterProxyModel>
 #include <QComboBox>
-#include <qtablemodel.h>
+#include <Model/qtablemodel.h>
 class QProxyModel : public QSortFilterProxyModel
 {
 private:

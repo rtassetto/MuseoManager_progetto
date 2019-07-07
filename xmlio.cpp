@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QDebug>
 
+
 XmlIO::XmlIO(const std::string & s):filename(s){}
 
 Qontainer<MuseoItem *> XmlIO::read() const

@@ -4,13 +4,13 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QLineEdit>
-#include <tableview.h>
-#include <insertitem.h>
+#include <View/tableview.h>
+#include <View/insertitem.h>
 #include <QMessageBox>
-#include <museoitem.h>
-#include <qtablemodel.h>
-#include <qproxymodel.h>
-#include <searchview.h>
+#include <Model/Gerarchia/museoitem.h>
+#include <Model/qtablemodel.h>
+#include <Model/qproxymodel.h>
+#include <View/searchview.h>
 
 class MainWindow : public QWidget
 {
