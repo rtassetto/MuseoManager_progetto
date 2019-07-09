@@ -6,7 +6,7 @@ TableView::TableView(QWidget* parent) : QTableView(parent) {
 }
 
 QSize TableView::sizeHint() const {
-    return QSize(1200, 400);
+    return QSize(1000, 450);
 }
 
 void TableView::mousePressEvent(QMouseEvent* event) {

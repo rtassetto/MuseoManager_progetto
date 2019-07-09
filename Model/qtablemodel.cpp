@@ -67,6 +67,7 @@ bool QTableModel::setData(const QModelIndex & index, const QVariant & val, int r
         model->position(static_cast<unsigned int>(index.row()))->setNome(val.toString().toStdString()); break;
     case 2:
         model->position(static_cast<unsigned int>(index.row()))->setAutore(val.toString().toStdString()); break;
+
     }
     emit dataChanged(index, index);
     return true;
