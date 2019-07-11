@@ -69,7 +69,6 @@ MainWindow::MainWindow(QWidget *parent, bool toLoad)
     connect(search,SIGNAL(deleteAll()),this,SLOT(deleteAllData()));
 
 
-
     connect(search->getSearchbar(), SIGNAL(textChanged(const QString&)), this, SLOT(searchTextChanged()));
     connect(search->getType(), SIGNAL(currentTextChanged(const QString&)), this, SLOT(searchTextChanged()));
 
@@ -134,7 +133,7 @@ void MainWindow::save()
     }else{
         file=QFileDialog::getSaveFileName(this,tr("Salva"), "",tr("XML (*.xml);;All Files (*)"));
         if(!file.isEmpty()){
-            setWindowTitle(QFileInfo(file).fileName() + tr(" - My Beauty"));
+            setWindowTitle(QFileInfo(file).fileName() + tr("/ MuseoManager"));
             try {
                 model->save(file.toStdString());
             } catch (std::exception) {

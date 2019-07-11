@@ -88,8 +88,8 @@ void XmlIO::write(const Qontainer<MuseoItem *> & q) const
         throw std::exception();
     }
     QXmlStreamWriter writer(&file);
-    writer.setAutoFormatting(true); // Per leggibilità del file XML
-    writer.writeStartDocument();    // Scrive le intestazioni XML
+    writer.setAutoFormatting(true);
+    writer.writeStartDocument();
     writer.writeStartElement("root");
     auto cit = q.c_begin();
     while(cit!= q.c_end()) {
@@ -108,19 +108,19 @@ void XmlIO::write(const Qontainer<MuseoItem *> & q) const
             writer.writeAttribute("foto",QString::fromStdString(sit->getFotoS()));
         }else if(tipo=="Libro"){
             const BookItem* lit=static_cast<const BookItem*>(it);
-            writer.writeAttribute("data",(lit->getDataDocumento()).QDate::toString("dd.MM.yyyy"));
+            writer.writeAttribute("dataDocumento",(lit->getDataDocumento()).QDate::toString("dd.MM.yyyy"));
             writer.writeAttribute("prefazione",QString::fromStdString(lit->getPrefazione()));
             writer.writeAttribute("copertina",QString::fromStdString(lit->getCopertina()));
 
         }else if(tipo=="Magazine"){
             const MagazineItem* mit=static_cast<const MagazineItem*>(it);
-            writer.writeAttribute("data",(mit->getDataDocumento()).QDate::toString("dd.MM.yyyy"));
+            writer.writeAttribute("dataDocumento",(mit->getDataDocumento()).QDate::toString("dd.MM.yyyy"));
             writer.writeAttribute("primaPagina",QString::fromStdString(mit->getPrimaPagina()));
             writer.writeAttribute("categoria",QString::fromStdString(mit->getCategoriaM()));
 
         }else if(tipo=="Lettera"){
             const LetterItem* lit=static_cast<const LetterItem*>(it);
-            writer.writeAttribute("data",(lit->getDataDocumento()).QDate::toString("dd.MM.yyyy"));
+            writer.writeAttribute("dataDocumento",(lit->getDataDocumento()).QDate::toString("dd.MM.yyyy"));
             writer.writeAttribute("destinatario",QString::fromStdString(lit->getDestinatario()));
             writer.writeAttribute("testo",QString::fromStdString(lit->getTesto()));
 
@@ -133,8 +133,8 @@ void XmlIO::write(const Qontainer<MuseoItem *> & q) const
         }
         cit++;
     }
-    writer.writeEndElement();   // </root>
-    writer.writeEndDocument();  // chiude eventuali tag lasciati aperti e aggiunge una riga vuota alla fine
+    writer.writeEndElement();
+    writer.writeEndDocument();
     file.commit();
 }
 
